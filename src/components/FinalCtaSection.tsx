@@ -1,8 +1,8 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Container, Typography } from '@mui/material';
 import styled from 'styled-components';
-import { Reveal } from './Reveal';
 import { palette } from '../theme';
+import { Reveal } from './Reveal';
 
 const Section = styled.section`
   padding: clamp(64px, 8vw, 120px) 0;
@@ -62,9 +62,8 @@ export function FinalCtaSection({ onContactClick }: FinalCtaSectionProps) {
                 Vamos transformar sua ideia em uma solução web profissional?
               </Title>
               <Typography color={palette.textMuted} fontSize="1.1rem" lineHeight={1.75} mb={4}>
-                Me conte o que você quer construir e receba uma análise inicial sobre o melhor
-                caminho para tirar seu projeto do papel com segurança, performance e visão de
-                negócio.
+                Responda um briefing rápido e receba uma direção inicial para entender o melhor
+                caminho: landing page, site profissional ou sistema web sob medida.
               </Typography>
               <Button
                 variant="contained"

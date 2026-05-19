@@ -5,7 +5,7 @@ export const pricingPlans: PricingPlan[] = [
     name: 'Landing Page Profissional',
     price: 'A partir de R$ 2.500',
     description:
-      'Ideal para campanhas, prestadores de serviço, negócios locais e empresas que precisam captar contatos com uma página rápida, bonita e confiável.',
+      'Para negócios que precisam divulgar uma oferta, captar contatos e transformar visitas em conversas pelo WhatsApp.',
     features: [
       'Design responsivo',
       'Desenvolvimento em React',
@@ -26,7 +26,7 @@ export const pricingPlans: PricingPlan[] = [
     badge: 'Mais indicado',
     highlighted: true,
     description:
-      'Para negócios que precisam de uma aplicação web específica para organizar processos, captar dados, automatizar tarefas ou atender clientes.',
+      'Para quem precisa captar dados, organizar pedidos, automatizar etapas ou criar uma ferramenta web específica para o negócio.',
     features: [
       'Sistema de cadastro de clientes',
       'Área administrativa',
@@ -47,7 +47,7 @@ export const pricingPlans: PricingPlan[] = [
     name: 'Sistema Web Completo',
     price: 'Sob orçamento',
     description:
-      'Para operações que exigem um sistema robusto, escalável e construído sob medida para regras de negócio específicas.',
+      'Para operações que exigem regras próprias, áreas logadas, integrações e uma base técnica preparada para crescer.',
     features: [
       'Arquitetura full stack',
       'Painel administrativo avançado',

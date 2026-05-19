@@ -7,8 +7,8 @@ import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 import { Container, Typography } from '@mui/material';
 import styled from 'styled-components';
-import { Reveal } from './Reveal';
 import { palette } from '../theme';
+import { Reveal } from './Reveal';
 
 const Section = styled.section`
   background: #f4f6f8;
@@ -54,11 +54,11 @@ const Grid = styled.div`
 `;
 
 const Card = styled.article`
-  min-height: 244px;
+  min-height: 236px;
   border: 1px solid rgba(7, 10, 18, 0.1);
   border-radius: 22px;
   padding: clamp(22px, 3vw, 32px);
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.76);
   transition:
     transform 300ms ease,
     border-color 300ms ease,
@@ -68,6 +68,10 @@ const Card = styled.article`
     transform: translateY(-6px);
     border-color: rgba(8, 203, 0, 0.34);
     box-shadow: 0 24px 60px rgba(7, 10, 18, 0.08);
+  }
+
+  &:hover svg {
+    transform: translateY(-2px) rotate(-4deg);
   }
 `;
 
@@ -79,17 +83,18 @@ const IconCircle = styled.div`
   border-radius: 50%;
   color: ${palette.ink};
   background: #eef1f4;
-  margin-bottom: clamp(28px, 4vw, 46px);
+  margin-bottom: clamp(24px, 4vw, 40px);
 
   svg {
     font-size: 30px;
+    transition: transform 260ms ease;
   }
 `;
 
 const differentials = [
   {
     icon: <CodeOutlinedIcon />,
-    title: 'Desenvolvimento Full Stack Sênior',
+    title: 'Desenvolvimento full stack sênior',
     text: 'Arquitetura, frontend, backend e integrações pensados para produção.',
   },
   {
@@ -109,13 +114,13 @@ const differentials = [
   },
   {
     icon: <SupportAgentOutlinedIcon />,
-    title: 'Suporte e manutenção contínua',
+    title: 'Suporte e evolução contínua',
     text: 'Acompanhamento após entrega para evoluir a solução com tranquilidade.',
   },
   {
     icon: <TrendingUpOutlinedIcon />,
-    title: 'Soluções escaláveis',
-    text: 'Bases técnicas preparadas para crescer junto com a operação do negócio.',
+    title: 'Soluções preparadas para crescer',
+    text: 'Bases técnicas que acompanham o crescimento da operação do negócio.',
   },
 ];
 

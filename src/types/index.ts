@@ -5,9 +5,11 @@ export type NavItem = {
 
 export type Project = {
   title: string;
-  description: string;
+  segment: string;
+  problem: string;
+  solution: string;
+  result: string;
   tags: string[];
-  metric: string;
   accent: string;
 };
 

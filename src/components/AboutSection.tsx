@@ -1,8 +1,8 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Container, Typography } from '@mui/material';
 import styled from 'styled-components';
-import { Reveal } from './Reveal';
 import { palette } from '../theme';
+import { Reveal } from './Reveal';
 
 const Section = styled.section`
   background: #f4f6f8;
@@ -67,8 +67,8 @@ const Avatar = styled.div`
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background:
-    radial-gradient(circle at 70% 24%, rgba(8, 203, 0, 0.32), transparent 22%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.02));
+    linear-gradient(135deg, rgba(8, 203, 0, 0.22), rgba(255, 255, 255, 0.04)),
+    rgba(255, 255, 255, 0.04);
   display: grid;
   place-items: center;
   margin-bottom: 24px;
@@ -112,8 +112,8 @@ const CredentialList = styled.ul`
 export function AboutSection() {
   const credentials = [
     '+5 anos de experiência',
-    'Desenvolvedor Full Stack Sênior',
-    'React, TypeScript, Node.js, Cloud e DevOps',
+    'Desenvolvedor full stack sênior',
+    'React, TypeScript, Node.js, cloud e DevOps',
     'Soluções web completas',
     'Foco em pequenos negócios e operações digitais',
   ];
@@ -129,14 +129,13 @@ export function AboutSection() {
               </Title>
               <Copy mb={2.2}>
                 A HC Web Solutions é liderada por Humberto Castro, desenvolvedor full stack sênior
-                com mais de 5 anos de experiência no desenvolvimento de soluções web, integrações,
-                infraestrutura, segurança e sistemas sob medida.
+                com mais de 5 anos de experiência criando landing pages, sites profissionais,
+                integrações, infraestrutura e sistemas sob medida.
               </Copy>
               <Copy>
-                O foco da marca é oferecer soluções digitais escaláveis para diferentes modelos de
-                negócio, desde uma landing page profissional para validação e captação de clientes
-                até sistemas web robustos com autenticação, banco de dados, integrações, dashboards e
-                infraestrutura em nuvem.
+                A proposta é unir clareza comercial, design e desenvolvimento técnico para tirar
+                ideias do improviso e transformar presença digital em um canal mais confiável de
+                captação, atendimento e operação.
               </Copy>
             </div>
           </Reveal>
@@ -150,7 +149,7 @@ export function AboutSection() {
                 Humberto Castro
               </Typography>
               <Typography variant="h3" fontSize="clamp(1.6rem, 3vw, 2.35rem)" lineHeight={1.1}>
-                Desenvolvedor Full Stack Sênior
+                Desenvolvedor full stack sênior
               </Typography>
               <CredentialList>
                 {credentials.map((item) => (

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
+import { motionTokens } from '../motion';
 
 type RevealProps = {
   children: ReactNode;
@@ -17,9 +18,9 @@ export function Reveal({ children, delay = 0, y = 26, className }: RevealProps) 
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.62,
+        duration: motionTokens.duration.slow,
         delay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: motionTokens.softEase,
       },
     },
   };

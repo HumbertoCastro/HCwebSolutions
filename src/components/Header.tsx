@@ -19,7 +19,7 @@ import type { NavItem } from '../types';
 
 const navItems: NavItem[] = [
   { label: 'Início', href: '#inicio' },
-  { label: 'Projetos', href: '#projetos' },
+  { label: 'Cases', href: '#projetos' },
   { label: 'Quem Somos', href: '#quem-somos' },
   { label: 'Planos', href: '#planos' },
   { label: 'Contato', href: '/contato' },
@@ -42,7 +42,7 @@ const HeaderShell = styled.header<{ $scrolled: boolean }>`
 `;
 
 const HeaderInner = styled.div`
-  min-height: 94px;
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -238,15 +238,9 @@ export function Header({ onContactClick }: HeaderProps) {
               color="primary"
               endIcon={<ArrowForwardIcon />}
               onClick={onContactClick}
-              sx={{
-                minHeight: 52,
-                px: 2.8,
-                '& .MuiButton-endIcon': { transition: 'transform 180ms ease' },
-                '&:hover': { transform: 'translateY(-1px)' },
-                '&:hover .MuiButton-endIcon': { transform: 'translateX(3px)' },
-              }}
+              sx={{ minHeight: 52, px: 2.8 }}
             >
-              Fale comigo
+              Começar briefing
             </Button>
           </DesktopActions>
 
@@ -299,7 +293,7 @@ export function Header({ onContactClick }: HeaderProps) {
             }}
             sx={{ mt: 3 }}
           >
-            Fale comigo
+            Começar briefing
           </Button>
         </DrawerPanel>
       </Drawer>

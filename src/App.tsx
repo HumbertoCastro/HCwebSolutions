@@ -1,8 +1,37 @@
 import { CssBaseline, GlobalStyles } from '@mui/material';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { PageTransition } from './components/PageTransition';
 import { ContactPage } from './pages/ContactPage';
 import { HomePage } from './pages/HomePage';
 import { palette } from './theme';
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <PageTransition>
+              <HomePage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/contato"
+          element={
+            <PageTransition>
+              <ContactPage />
+            </PageTransition>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
@@ -37,10 +66,7 @@ function App() {
         }}
       />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/contato" element={<ContactPage />} />
-        </Routes>
+        <AnimatedRoutes />
       </BrowserRouter>
     </>
   );
