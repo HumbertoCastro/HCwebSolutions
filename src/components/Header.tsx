@@ -42,14 +42,14 @@ const HeaderShell = styled.header<{ $scrolled: boolean }>`
 `;
 
 const HeaderInner = styled.div`
-  min-height: 90px;
+  min-height: 82px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: clamp(22px, 3vw, 46px);
 
-  @media (max-width: 899px) {
-    min-height: 76px;
+  @media (max-width: 1099px) {
+    min-height: 72px;
   }
 `;
 
@@ -96,7 +96,7 @@ const Nav = styled.nav`
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.035);
 
-  @media (max-width: 899px) {
+  @media (max-width: 1099px) {
     display: none;
   }
 `;
@@ -149,7 +149,7 @@ const DesktopActions = styled.div`
   align-items: center;
   gap: 12px;
 
-  @media (max-width: 899px) {
+  @media (max-width: 1099px) {
     display: none;
   }
 `;
@@ -163,7 +163,7 @@ const MobileButton = styled(IconButton)`
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.04);
 
-    @media (max-width: 899px) {
+    @media (max-width: 1099px) {
       display: inline-flex;
     }
   }

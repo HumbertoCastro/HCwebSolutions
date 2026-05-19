@@ -1,8 +1,8 @@
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { Container, Typography } from '@mui/material';
-import styled from 'styled-components';
-import { palette } from '../theme';
-import { Reveal } from './Reveal';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Container, Typography } from "@mui/material";
+import styled from "styled-components";
+import { palette } from "../theme";
+import { Reveal } from "./Reveal";
 
 const Section = styled.section`
   background: #f4f6f8;
@@ -111,11 +111,11 @@ const CredentialList = styled.ul`
 
 export function AboutSection() {
   const credentials = [
-    '+5 anos de experiência',
-    'Desenvolvedor full stack sênior',
-    'React, TypeScript, Node.js, cloud e DevOps',
-    'Soluções web completas',
-    'Foco em pequenos negócios e operações digitais',
+    "+5 anos de experiência",
+    "Desenvolvedor full stack sênior",
+    "React, TypeScript, Node.js, cloud e DevOps",
+    "Soluções web completas",
+    "Foco em pequenos negócios e operações digitais",
   ];
 
   return (
@@ -125,17 +125,22 @@ export function AboutSection() {
           <Reveal>
             <div>
               <Title id="about-title" variant="h2" mb={3}>
-                Quem está por trás <span>da HC Web Solutions</span>
+                Quem está por trás{" "}
+                <span style={{ color: palette.accent }}>
+                  da HC Web Solutions
+                </span>
               </Title>
               <Copy mb={2.2}>
-                A HC Web Solutions é liderada por Humberto Castro, desenvolvedor full stack sênior
-                com mais de 5 anos de experiência criando landing pages, sites profissionais,
-                integrações, infraestrutura e sistemas sob medida.
+                A HC Web Solutions é liderada por Humberto Castro, desenvolvedor
+                full stack sênior com mais de 5 anos de experiência criando
+                landing pages, sites profissionais, integrações, infraestrutura
+                e sistemas sob medida.
               </Copy>
               <Copy>
-                A proposta é unir clareza comercial, design e desenvolvimento técnico para tirar
-                ideias do improviso e transformar presença digital em um canal mais confiável de
-                captação, atendimento e operação.
+                A proposta é unir clareza comercial, design e desenvolvimento
+                técnico para tirar ideias do improviso e transformar presença
+                digital em um canal mais confiável de captação, atendimento e
+                operação.
               </Copy>
             </div>
           </Reveal>
@@ -145,10 +150,19 @@ export function AboutSection() {
               <Avatar aria-hidden="true">
                 <Initials>HC</Initials>
               </Avatar>
-              <Typography color={palette.accent} fontWeight={850} fontSize="0.82rem" mb={1}>
+              <Typography
+                color={palette.accent}
+                fontWeight={850}
+                fontSize="0.82rem"
+                mb={1}
+              >
                 Humberto Castro
               </Typography>
-              <Typography variant="h3" fontSize="clamp(1.6rem, 3vw, 2.35rem)" lineHeight={1.1}>
+              <Typography
+                variant="h3"
+                fontSize="clamp(1.6rem, 3vw, 2.35rem)"
+                lineHeight={1.1}
+              >
                 Desenvolvedor full stack sênior
               </Typography>
               <CredentialList>

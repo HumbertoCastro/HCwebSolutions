@@ -1,13 +1,13 @@
-import { useState, type CSSProperties, type MouseEvent } from 'react';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
-import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
-import { Button, Container, Stack, Typography } from '@mui/material';
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import styled, { keyframes } from 'styled-components';
-import { motionTokens } from '../motion';
-import { palette } from '../theme';
+import { useState, type CSSProperties, type MouseEvent } from "react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import styled, { keyframes } from "styled-components";
+import { motionTokens } from "../motion";
+import { palette } from "../theme";
 
 const floatSoft = keyframes`
   0%, 100% {
@@ -22,10 +22,13 @@ const floatSoft = keyframes`
 const Hero = styled.section`
   position: relative;
   overflow: hidden;
-  padding: clamp(54px, 7vw, 104px) 0 clamp(56px, 7vw, 100px);
+  display: grid;
+  align-items: center;
+  min-height: calc(100svh - 82px);
+  padding: clamp(28px, 3vw, 52px) 0 clamp(42px, 4vw, 72px);
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background:
@@ -37,7 +40,12 @@ const Hero = styled.section`
   }
 
   @media (max-width: 599px) {
+    min-height: auto;
     padding: 40px 0 64px;
+  }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    padding: 24px 0 36px;
   }
 `;
 
@@ -62,8 +70,8 @@ const HeroGrid = styled.div`
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.86fr);
-  gap: clamp(34px, 5.4vw, 78px);
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.84fr);
+  gap: clamp(28px, 4.4vw, 64px);
   align-items: center;
 
   @media (max-width: 1023px) {
@@ -99,10 +107,10 @@ const Badge = styled.span`
 
 const HeroTitle = styled(Typography)`
   && {
-    max-width: 920px;
-    font-size: clamp(2.7rem, 5.25vw, 5.8rem);
+    max-width: 790px;
+    font-size: clamp(2.6rem, 4vw, 4.55rem);
     letter-spacing: 0;
-    line-height: 0.98;
+    line-height: 1;
     color: ${palette.text};
     text-wrap: balance;
 
@@ -114,24 +122,28 @@ const HeroTitle = styled(Typography)`
       font-size: clamp(2.2rem, 10.5vw, 3.48rem);
       line-height: 1.02;
     }
+
+    @media (min-width: 1024px) and (max-height: 820px) {
+      font-size: clamp(2.45rem, 3.9vw, 3.6rem);
+    }
   }
 `;
 
 const HeroText = styled(Typography)`
   && {
-    max-width: 690px;
+    max-width: 640px;
     color: ${palette.textMuted};
-    font-size: clamp(1rem, 1.25vw, 1.18rem);
-    line-height: 1.72;
-    margin-top: 24px;
+    font-size: clamp(1rem, 1.08vw, 1.08rem);
+    line-height: 1.62;
+    margin-top: 18px;
   }
 `;
 
 const TrustIndicators = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 18px;
-  margin-top: 26px;
+  gap: 8px 16px;
+  margin-top: 18px;
 `;
 
 const TrustItem = styled.span`
@@ -151,21 +163,25 @@ const TrustItem = styled.span`
 const MiniFlow = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 28px;
-  max-width: 740px;
+  gap: 8px;
+  margin-top: 18px;
+  max-width: 660px;
 
   @media (max-width: 640px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    display: none;
+  }
 `;
 
 const FlowStep = styled(motion.div)`
-  min-height: 88px;
+  min-height: 72px;
   border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 18px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.045);
-  padding: 13px;
+  padding: 11px;
   transition:
     transform 260ms ease,
     border-color 260ms ease,
@@ -190,12 +206,16 @@ const VisualWrap = styled(motion.div)`
 
 const VisualPanel = styled.div`
   position: relative;
-  min-height: 560px;
+  min-height: 520px;
   border: 1px solid ${palette.border};
-  border-radius: 32px;
-  padding: 18px;
+  border-radius: 30px;
+  padding: 16px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.028)),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.11),
+      rgba(255, 255, 255, 0.028)
+    ),
     ${palette.surface};
   box-shadow: 0 42px 110px rgba(0, 0, 0, 0.38);
   transition:
@@ -207,7 +227,9 @@ const VisualPanel = styled.div`
   &:hover {
     transform: translateY(-6px);
     border-color: rgba(8, 203, 0, 0.36);
-    box-shadow: 0 48px 120px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(8, 203, 0, 0.12);
+    box-shadow:
+      0 48px 120px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(8, 203, 0, 0.12);
   }
 
   @media (max-width: 1023px) {
@@ -220,6 +242,12 @@ const VisualPanel = styled.div`
     border-radius: 24px;
     padding: 12px;
     animation: none;
+  }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    min-height: 0;
+    border-radius: 24px;
+    padding: 12px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -241,16 +269,26 @@ const Browser = styled.div`
   @media (max-width: 899px), (prefers-reduced-motion: reduce) {
     transform: none !important;
   }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    min-height: 0;
+    border-radius: 20px;
+  }
 `;
 
 const BrowserTop = styled.div`
-  height: 56px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 18px;
   border-bottom: 1px solid rgba(7, 10, 18, 0.08);
   background: rgba(255, 255, 255, 0.78);
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    height: 40px;
+    padding: 0 14px;
+  }
 `;
 
 const WindowDots = styled.div`
@@ -286,34 +324,50 @@ const UrlPill = styled.div`
 `;
 
 const PreviewBody = styled.div`
-  padding: clamp(16px, 2.4vw, 26px);
+  padding: clamp(14px, 1.8vw, 20px);
   display: grid;
-  gap: 16px;
+  gap: 12px;
 
   @media (max-width: 599px) {
     gap: 12px;
   }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    padding: 12px;
+    gap: 10px;
+  }
 `;
 
 const CampaignHero = styled.div`
-  border-radius: 24px;
-  padding: clamp(20px, 3vw, 30px);
+  border-radius: 22px;
+  padding: clamp(18px, 2.3vw, 24px);
   background:
     linear-gradient(135deg, rgba(8, 203, 0, 0.2), transparent 42%),
     ${palette.ink};
   color: ${palette.text};
-  min-height: 214px;
+  min-height: 188px;
   position: relative;
   overflow: hidden;
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    min-height: 154px;
+    border-radius: 18px;
+    padding: 16px;
+  }
 `;
 
 const LandingTitle = styled(Typography)`
   && {
     position: relative;
     z-index: 1;
-    max-width: 380px;
-    font-size: clamp(1.55rem, 3.2vw, 2.55rem);
-    line-height: 1.05;
+    max-width: 360px;
+    font-size: clamp(1.45rem, 2.45vw, 2.25rem);
+    line-height: 1.08;
+
+    @media (min-width: 1024px) and (max-height: 820px) {
+      max-width: 330px;
+      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+    }
   }
 `;
 
@@ -324,14 +378,21 @@ const FakeCta = styled.div`
   align-items: center;
   gap: 8px;
   width: fit-content;
-  min-height: 42px;
-  margin-top: 18px;
+  min-height: 38px;
+  margin-top: 14px;
   padding: 9px 14px;
   border-radius: 999px;
   background: ${palette.accent};
   color: ${palette.ink};
   font-size: 0.86rem;
   font-weight: 850;
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    min-height: 34px;
+    margin-top: 12px;
+    padding: 7px 12px;
+    font-size: 0.78rem;
+  }
 `;
 
 const SignalGrid = styled.div`
@@ -348,13 +409,22 @@ const SignalCard = styled.div`
   border-radius: 18px;
   border: 1px solid rgba(7, 10, 18, 0.08);
   background: #ffffff;
-  padding: 14px;
+  padding: 12px;
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    border-radius: 14px;
+    padding: 10px;
+  }
 `;
 
 const SignalValue = styled.div`
   color: ${palette.ink};
   font-size: 0.92rem;
   font-weight: 900;
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    font-size: 0.84rem;
+  }
 `;
 
 const JourneyBoard = styled.div`
@@ -365,14 +435,18 @@ const JourneyBoard = styled.div`
   @media (max-width: 599px) {
     grid-template-columns: 1fr;
   }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    display: none;
+  }
 `;
 
 const BriefingCard = styled.div`
   border-radius: 20px;
   border: 1px solid rgba(7, 10, 18, 0.08);
   background: #ffffff;
-  padding: 18px;
-  min-height: 154px;
+  padding: 16px;
+  min-height: 124px;
 `;
 
 const Line = styled.div<{ $width: string; $accent?: boolean }>`
@@ -380,7 +454,8 @@ const Line = styled.div<{ $width: string; $accent?: boolean }>`
   height: 10px;
   border-radius: 999px;
   margin-top: 11px;
-  background: ${(props) => (props.$accent ? palette.accent : 'rgba(7, 10, 18, 0.11)')};
+  background: ${(props) =>
+    props.$accent ? palette.accent : "rgba(7, 10, 18, 0.11)"};
 `;
 
 const ToolGrid = styled.div`
@@ -391,7 +466,7 @@ const ToolGrid = styled.div`
 
 const ToolCard = styled.div`
   border-radius: 16px;
-  padding: 13px;
+  padding: 11px;
   border: 1px solid rgba(7, 10, 18, 0.08);
   background: #ffffff;
   color: #465160;
@@ -402,11 +477,11 @@ const ToolCard = styled.div`
 const FloatingLeadCard = styled.div`
   position: absolute;
   right: -18px;
-  bottom: 42px;
+  bottom: 28px;
   z-index: 2;
-  width: min(270px, 74%);
+  width: min(250px, 74%);
   border-radius: 20px;
-  padding: 16px;
+  padding: 14px;
   border: 1px solid rgba(8, 203, 0, 0.28);
   background: rgba(7, 10, 18, 0.92);
   color: ${palette.text};
@@ -418,14 +493,22 @@ const FloatingLeadCard = styled.div`
     width: auto;
     margin-top: 12px;
   }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    display: none;
+  }
 `;
 
 type HeroSectionProps = {
   onContactClick: () => void;
 };
 
-const trustItems = ['+5 anos de experiência', 'Briefing em menos de 2 minutos', 'Solução sob medida'];
-const flowItems = ['Ideia', 'Briefing', 'Proposta', 'Entrega'];
+const trustItems = [
+  "+5 anos de experiência",
+  "Briefing em menos de 2 minutos",
+  "Solução sob medida",
+];
+const flowItems = ["Ideia", "Briefing", "Proposta", "Entrega"];
 
 export function HeroSection({ onContactClick }: HeroSectionProps) {
   const [mouse, setMouse] = useState({ x: 50, y: 36, active: 0 });
@@ -446,17 +529,26 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: motionTokens.duration.slow, ease: motionTokens.softEase },
+      transition: {
+        duration: motionTokens.duration.slow,
+        ease: motionTokens.softEase,
+      },
     },
   };
 
   const mockupVariants: Variants = {
-    hidden: prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 28, scale: 0.97 },
+    hidden: prefersReducedMotion
+      ? { opacity: 1 }
+      : { opacity: 0, y: 28, scale: 0.97 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: motionTokens.duration.slow, delay: 0.24, ease: motionTokens.softEase },
+      transition: {
+        duration: motionTokens.duration.slow,
+        delay: 0.24,
+        ease: motionTokens.softEase,
+      },
     },
   };
 
@@ -470,9 +562,9 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
   };
 
   const spotlightStyle = {
-    '--mouse-x': `${mouse.x}%`,
-    '--mouse-y': `${mouse.y}%`,
-    '--spotlight-opacity': mouse.active,
+    "--mouse-x": `${mouse.x}%`,
+    "--mouse-y": `${mouse.y}%`,
+    "--spotlight-opacity": mouse.active,
   } as CSSProperties;
 
   const parallaxStyle = prefersReducedMotion
@@ -499,20 +591,26 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
-              <HeroTitle variant="h1" mt={2.5}>
-                Transforme sua presença digital em uma máquina de <span>pedidos e contatos</span>
+              <HeroTitle variant="h1" mt={2}>
+                Sites e soluções web para negócios que querem{" "}
+                <span>vender melhor</span>
               </HeroTitle>
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
               <HeroText>
-                Eu desenho e desenvolvo experiências web para divulgar serviços, captar clientes,
-                organizar processos e levar seu negócio para uma presença mais profissional.
+                landing pages, sites institucionais e soluções sob medida para
+                divulgar seus serviços, captar clientes e organizar processos
+                com uma presença mais profissional.
               </HeroText>
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} mt={4}>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={1.5}
+                mt={3}
+              >
                 <Button
                   variant="contained"
                   color="primary"
@@ -531,11 +629,11 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
                   size="large"
                   sx={{
                     minHeight: 54,
-                    borderColor: 'rgba(255,255,255,0.22)',
+                    borderColor: "rgba(255,255,255,0.22)",
                     color: palette.text,
-                    '&:hover': {
+                    "&:hover": {
                       borderColor: palette.accent,
-                      bgcolor: 'rgba(8,203,0,0.08)',
+                      bgcolor: "rgba(8,203,0,0.08)",
                     },
                   }}
                 >
@@ -552,20 +650,13 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
                 ))}
               </TrustIndicators>
             </AnimatedBlock>
-
-            <MiniFlow variants={copyVariants}>
-              {flowItems.map((item, index) => (
-                <FlowStep variants={itemVariants} key={item}>
-                  <FlowNumber>0{index + 1}</FlowNumber>
-                  <Typography color={palette.text} fontWeight={900} mt={1}>
-                    {item}
-                  </Typography>
-                </FlowStep>
-              ))}
-            </MiniFlow>
           </HeroCopy>
 
-          <VisualWrap variants={mockupVariants} initial="hidden" animate="visible">
+          <VisualWrap
+            variants={mockupVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <VisualPanel aria-label="Preview de jornada de captação para clientes">
               <Browser style={parallaxStyle}>
                 <BrowserTop>
@@ -579,12 +670,20 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
 
                 <PreviewBody>
                   <CampaignHero>
-                    <Typography color={palette.accent} fontWeight={850} fontSize="0.78rem" mb={1.2}>
+                    <Typography
+                      color={palette.accent}
+                      fontWeight={850}
+                      fontSize="0.78rem"
+                      mb={1.2}
+                    >
                       Página de alta conversão
                     </Typography>
-                    <LandingTitle variant="h2">Oferta clara, WhatsApp pronto e confiança visual</LandingTitle>
+                    <LandingTitle variant="h2">
+                      Oferta clara, WhatsApp pronto e confiança visual
+                    </LandingTitle>
                     <FakeCta>
-                      Falar no WhatsApp <ArrowForwardIcon sx={{ fontSize: 18 }} />
+                      Falar no WhatsApp{" "}
+                      <ArrowForwardIcon sx={{ fontSize: 18 }} />
                     </FakeCta>
                   </CampaignHero>
 
@@ -620,7 +719,12 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
                     </BriefingCard>
 
                     <ToolGrid>
-                      {['Oferta clara', 'CTA direto', 'Prova visual', 'Métricas'].map((item) => (
+                      {[
+                        "Oferta clara",
+                        "CTA direto",
+                        "Prova visual",
+                        "Métricas",
+                      ].map((item) => (
                         <ToolCard key={item}>{item}</ToolCard>
                       ))}
                     </ToolGrid>
@@ -629,11 +733,16 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
               </Browser>
 
               <FloatingLeadCard>
-                <Typography color={palette.textMuted} fontSize="0.78rem" fontWeight={780}>
+                <Typography
+                  color={palette.textMuted}
+                  fontSize="0.78rem"
+                  fontWeight={780}
+                >
                   Próximo passo
                 </Typography>
                 <Typography fontWeight={900} mt={0.6}>
-                  O usuário responde um briefing simples e chega ao WhatsApp com a ideia organizada.
+                  O usuário responde um briefing simples e chega ao WhatsApp com
+                  a ideia organizada.
                 </Typography>
               </FloatingLeadCard>
             </VisualPanel>

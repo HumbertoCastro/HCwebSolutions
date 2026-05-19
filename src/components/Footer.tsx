@@ -1,18 +1,18 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Container, Typography } from '@mui/material';
-import styled from 'styled-components';
-import { palette } from '../theme';
-import type { NavItem } from '../types';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Container, Typography } from "@mui/material";
+import styled from "styled-components";
+import { palette } from "../theme";
+import type { NavItem } from "../types";
 
-const PHONE_PLACEHOLDER = '+55 (00) 00000-0000';
-const EMAIL_PLACEHOLDER = 'contato@hcwebsolutions.com.br';
+const PHONE_PLACEHOLDER = "+55 (31) 97586-3351";
+const EMAIL_PLACEHOLDER = "humberto-dev@hotmail.com.br";
 
 const footerLinks: NavItem[] = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Quem Somos', href: '#quem-somos' },
-  { label: 'Planos', href: '#planos' },
-  { label: 'Contato', href: '/contato' },
+  { label: "Início", href: "#inicio" },
+  { label: "Projetos", href: "#projetos" },
+  { label: "Quem Somos", href: "#quem-somos" },
+  { label: "Planos", href: "#planos" },
+  { label: "Contato", href: "/contato" },
 ];
 
 const FooterShell = styled.footer`
@@ -24,7 +24,10 @@ const FooterShell = styled.footer`
 
 const FooterGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.55fr) minmax(240px, 0.55fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.55fr) minmax(
+      240px,
+      0.55fr
+    );
   gap: 34px;
   align-items: start;
 
@@ -97,9 +100,13 @@ export function Footer() {
               <LogoIcon src="/icon.png" alt="" aria-hidden="true" />
               HC Web&nbsp;<span>Solutions.</span>
             </Logo>
-            <Typography color={palette.textMuted} maxWidth={620} lineHeight={1.75}>
-              Desenvolvimento web profissional para negócios que querem crescer com tecnologia,
-              design e segurança.
+            <Typography
+              color={palette.textMuted}
+              maxWidth={620}
+              lineHeight={1.75}
+            >
+              Desenvolvimento web profissional para negócios que querem crescer
+              com tecnologia, design e segurança.
             </Typography>
           </div>
 
@@ -110,7 +117,10 @@ export function Footer() {
             <LinkList aria-label="Links do rodapé">
               {footerLinks.map((link) => (
                 <FooterLink key={link.href} href={link.href}>
-                  {link.label} <ArrowForwardIcon sx={{ fontSize: 14, verticalAlign: '-2px' }} />
+                  {link.label}{" "}
+                  <ArrowForwardIcon
+                    sx={{ fontSize: 14, verticalAlign: "-2px" }}
+                  />
                 </FooterLink>
               ))}
             </LinkList>
@@ -123,15 +133,17 @@ export function Footer() {
             <Typography color={palette.textMuted} mb={1}>
               Telefone: {PHONE_PLACEHOLDER}
             </Typography>
-            <Typography color={palette.textMuted}>E-mail: {EMAIL_PLACEHOLDER}</Typography>
+            <Typography color={palette.textMuted}>
+              E-mail: {EMAIL_PLACEHOLDER}
+            </Typography>
           </div>
         </FooterGrid>
 
         <Bottom>
           <span>© 2026 HC Web Solutions. Todos os direitos reservados.</span>
           <span>
-            Made by Humberto Castro — Desenvolvedor Full Stack Sênior com mais de 5 anos de
-            experiência no mercado.
+            Made by Humberto Castro — Desenvolvedor Full Stack Sênior com mais
+            de 5 anos de experiência no mercado.
           </span>
         </Bottom>
       </Container>

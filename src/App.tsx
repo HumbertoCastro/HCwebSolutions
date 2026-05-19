@@ -1,6 +1,7 @@
 import { CssBaseline, GlobalStyles } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { FloatingWhatsAppButton } from './components/FloatingWhatsAppButton';
 import { PageTransition } from './components/PageTransition';
 import { ContactPage } from './pages/ContactPage';
 import { HomePage } from './pages/HomePage';
@@ -67,6 +68,7 @@ function App() {
       />
       <BrowserRouter>
         <AnimatedRoutes />
+        <FloatingWhatsAppButton />
       </BrowserRouter>
     </>
   );

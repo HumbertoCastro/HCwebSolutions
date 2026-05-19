@@ -15,7 +15,7 @@ import { palette } from '../../theme';
 import type { ContactFormData } from '../../types';
 import { ContactSummaryPanel } from './ContactSummaryPanel';
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '55SEUNUMEROAQUI';
+const WHATSAPP_NUMBER =  '5531975863351';
 const totalSteps = 4;
 
 const Form = styled.form`
