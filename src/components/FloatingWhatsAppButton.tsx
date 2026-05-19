@@ -1,9 +1,61 @@
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { palette } from '../theme';
 
 const WHATSAPP_NUMBER = '5531975863351';
 const WHATSAPP_MESSAGE = 'Ola, Humberto! Vamos construir junto? Vim pelo site da HC Web Solutions.';
+
+const float = keyframes`
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+`;
+
+const attention = keyframes`
+  0%,
+  72%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  76% {
+    transform: rotate(-10deg) scale(1.08);
+  }
+
+  80% {
+    transform: rotate(10deg) scale(1.08);
+  }
+
+  84% {
+    transform: rotate(-7deg) scale(1.05);
+  }
+
+  88% {
+    transform: rotate(7deg) scale(1.05);
+  }
+
+  92% {
+    transform: rotate(0deg) scale(1);
+  }
+`;
+
+const pulseRing = keyframes`
+  0% {
+    opacity: 0.48;
+    transform: scale(0.88);
+  }
+
+  72%,
+  100% {
+    opacity: 0;
+    transform: scale(1.72);
+  }
+`;
 
 const FloatingLink = styled.a`
   position: fixed;
@@ -23,10 +75,31 @@ const FloatingLink = styled.a`
     0 18px 44px rgba(8, 203, 0, 0.28),
     0 0 0 8px rgba(8, 203, 0, 0.1);
   text-decoration: none;
+  animation: ${float} 3.4s ease-in-out infinite;
   transition:
     transform 220ms ease,
     box-shadow 220ms ease,
     background 220ms ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  &::before {
+    border: 2px solid rgba(8, 203, 0, 0.52);
+    animation: ${pulseRing} 2.4s ease-out infinite;
+  }
+
+  &::after {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.34), transparent 58%);
+    opacity: 0.2;
+    transform: scale(0.72);
+  }
 
   &:hover,
   &:focus-visible {
@@ -46,6 +119,10 @@ const FloatingLink = styled.a`
   svg {
     width: 30px;
     height: 30px;
+    animation: ${attention} 4.6s ease-in-out infinite;
+    transform-origin: center;
+    position: relative;
+    z-index: 1;
   }
 
   @media (max-width: 599px) {
@@ -57,6 +134,15 @@ const FloatingLink = styled.a`
     svg {
       width: 28px;
       height: 28px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+
+    &::before,
+    svg {
+      animation: none;
     }
   }
 `;
