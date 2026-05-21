@@ -1,85 +1,85 @@
-import { useState, type CSSProperties, type MouseEvent } from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
-import { Button, Container, Stack, Typography } from "@mui/material";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import styled, { keyframes } from "styled-components";
-import { motionTokens } from "../motion";
-import { palette } from "../theme";
+import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import FlashOnRoundedIcon from '@mui/icons-material/FlashOnRounded';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import { Button, Container, Stack, Typography } from '@mui/material';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
+import styled, { css, keyframes } from 'styled-components';
+import { motionTokens } from '../motion';
+import { palette } from '../theme';
 
-const floatSoft = keyframes`
+const floatOne = keyframes`
   0%, 100% {
-    transform: translateY(0);
+    transform: translateZ(50px) translateY(0) translateX(0);
   }
 
   50% {
-    transform: translateY(-8px);
+    transform: translateZ(50px) translateY(-15px) translateX(10px);
+  }
+`;
+
+const floatTwo = keyframes`
+  0%, 100% {
+    transform: translateZ(100px) translateY(0) rotate(-4deg);
+  }
+
+  50% {
+    transform: translateZ(100px) translateY(-25px) rotate(-2deg);
+  }
+`;
+
+const floatThree = keyframes`
+  0%, 100% {
+    transform: translateZ(150px) translateY(0) rotate(4deg);
+  }
+
+  50% {
+    transform: translateZ(150px) translateY(-20px) rotate(6deg);
   }
 `;
 
 const Hero = styled.section`
   position: relative;
-  overflow: hidden;
+  min-height: 100svh;
   display: grid;
   align-items: center;
-  min-height: calc(100svh - 82px);
-  padding: clamp(28px, 3vw, 52px) 0 clamp(42px, 4vw, 72px);
+  overflow: hidden;
+  padding: clamp(128px, 14vw, 176px) 0 clamp(72px, 8vw, 116px);
+  scroll-margin-top: 100px;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 72px 72px;
-    mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
-    pointer-events: none;
-  }
-
-  @media (max-width: 599px) {
+  @media (max-width: 899px) {
     min-height: auto;
-    padding: 40px 0 64px;
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    padding: 24px 0 36px;
-  }
-`;
-
-const Spotlight = styled.div`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: var(--spotlight-opacity, 0);
-  background: radial-gradient(
-    circle 380px at var(--mouse-x, 50%) var(--mouse-y, 30%),
-    rgba(8, 203, 0, 0.12),
-    transparent 72%
-  );
-  transition: opacity 220ms ease;
-
-  @media (max-width: 899px), (prefers-reduced-motion: reduce) {
-    display: none;
+    padding: 118px 0 72px;
   }
 `;
 
 const HeroGrid = styled.div`
-  position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.84fr);
-  gap: clamp(28px, 4.4vw, 64px);
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.86fr);
+  gap: clamp(42px, 5vw, 78px);
   align-items: center;
+
+  > * {
+    min-width: 0;
+  }
 
   @media (max-width: 1023px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const HeroCopy = styled(motion.div)``;
+const HeroCopy = styled(motion.div)`
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+
+  @media (max-width: 599px) {
+    width: 100%;
+    max-width: calc(100vw - 32px);
+  }
+`;
 
 const AnimatedBlock = styled(motion.div)``;
 
@@ -87,167 +87,252 @@ const Badge = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  min-height: 38px;
   width: fit-content;
+  min-height: 36px;
   max-width: 100%;
-  padding: 8px 14px;
-  border: 1px solid rgba(8, 203, 0, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  background: rgba(8, 203, 0, 0.07);
-  color: ${palette.text};
-  font-size: clamp(0.78rem, 1vw, 0.9rem);
-  font-weight: 780;
+  background: rgba(255, 255, 255, 0.05);
+  color: ${palette.accent};
+  padding: 8px 13px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
   line-height: 1.25;
+  text-transform: uppercase;
 
   svg {
+    font-size: 17px;
     color: ${palette.accent};
-    font-size: 18px;
   }
 `;
 
 const HeroTitle = styled(Typography)`
   && {
     max-width: 790px;
-    font-size: clamp(2.6rem, 4vw, 4.55rem);
-    letter-spacing: 0;
-    line-height: 1;
+    margin-top: clamp(28px, 3vw, 34px);
     color: ${palette.text};
+    font-size: clamp(3.1rem, 6.5vw, 5.55rem);
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+    overflow-wrap: break-word;
     text-wrap: balance;
 
-    span {
+    strong {
       color: ${palette.accent};
+      font: inherit;
+    }
+
+    .mobile-copy {
+      display: none;
     }
 
     @media (max-width: 599px) {
-      font-size: clamp(2.2rem, 10.5vw, 3.48rem);
-      line-height: 1.02;
-    }
+      font-size: clamp(2.35rem, 10.1vw, 2.85rem);
+      letter-spacing: -0.04em;
+      line-height: 1.06;
 
-    @media (min-width: 1024px) and (max-height: 820px) {
-      font-size: clamp(2.45rem, 3.9vw, 3.6rem);
+      .desktop-copy {
+        display: none;
+      }
+
+      .mobile-copy {
+        display: inline;
+      }
     }
   }
 `;
 
 const HeroText = styled(Typography)`
   && {
-    max-width: 640px;
+    max-width: 510px;
+    margin-top: 26px;
     color: ${palette.textMuted};
-    font-size: clamp(1rem, 1.08vw, 1.08rem);
-    line-height: 1.62;
-    margin-top: 18px;
+    font-size: clamp(1.04rem, 1.45vw, 1.22rem);
+    font-weight: 500;
+    line-height: 1.38;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
   }
 `;
 
-const TrustIndicators = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  margin-top: 18px;
-`;
-
-const TrustItem = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: ${palette.textMuted};
-  font-size: 0.92rem;
-  font-weight: 720;
-
-  svg {
-    color: ${palette.accent};
-    font-size: 18px;
-  }
-`;
-
-const MiniFlow = styled(motion.div)`
+const VisualStage = styled(motion.div)`
+  position: relative;
+  min-width: 0;
+  min-height: 620px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 18px;
-  max-width: 660px;
-
-  @media (max-width: 640px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    display: none;
-  }
-`;
-
-const FlowStep = styled(motion.div)`
-  min-height: 72px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.045);
-  padding: 11px;
-  transition:
-    transform 260ms ease,
-    border-color 260ms ease,
-    background 260ms ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    border-color: rgba(8, 203, 0, 0.38);
-    background: rgba(8, 203, 0, 0.075);
-  }
-`;
-
-const FlowNumber = styled.span`
-  color: ${palette.accent};
-  font-size: 0.78rem;
-  font-weight: 900;
-`;
-
-const VisualWrap = styled(motion.div)`
-  position: relative;
-`;
-
-const VisualPanel = styled.div`
-  position: relative;
-  min-height: 520px;
-  border: 1px solid ${palette.border};
-  border-radius: 30px;
-  padding: 16px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.11),
-      rgba(255, 255, 255, 0.028)
-    ),
-    ${palette.surface};
-  box-shadow: 0 42px 110px rgba(0, 0, 0, 0.38);
-  transition:
-    transform 320ms ease,
-    border-color 320ms ease,
-    box-shadow 320ms ease;
-  animation: ${floatSoft} 8s ease-in-out infinite;
-
-  &:hover {
-    transform: translateY(-6px);
-    border-color: rgba(8, 203, 0, 0.36);
-    box-shadow:
-      0 48px 120px rgba(0, 0, 0, 0.42),
-      0 0 0 1px rgba(8, 203, 0, 0.12);
-  }
+  place-items: center;
+  perspective: 1200px;
 
   @media (max-width: 1023px) {
-    min-height: 500px;
-    max-width: 680px;
+    min-height: 560px;
   }
 
   @media (max-width: 599px) {
-    min-height: auto;
-    border-radius: 24px;
-    padding: 12px;
-    animation: none;
+    min-height: 520px;
+    transform: scale(0.88);
+    transform-origin: top center;
+    margin-bottom: -46px;
+  }
+`;
+
+const Phone = styled.div`
+  position: relative;
+  width: 260px;
+  height: 520px;
+  border: 14px solid #111111;
+  border-radius: 48px;
+  background: #0a0a0a;
+  box-shadow:
+    0 34px 110px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: rotateX(15deg) rotateY(-25deg) rotateZ(8deg);
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+
+  &:hover {
+    transform: rotateX(5deg) rotateY(-15deg) rotateZ(2deg);
   }
 
-  @media (min-width: 1024px) and (max-height: 820px) {
-    min-height: 0;
-    border-radius: 24px;
-    padding: 12px;
+  @media (prefers-reduced-motion: reduce) {
+    transform: rotateX(10deg) rotateY(-16deg) rotateZ(4deg);
+    transition: none;
+  }
+`;
+
+const PhoneScreen = styled.div`
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
+  background: #050505;
+  padding: 16px;
+`;
+
+const BrowserBar = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0 12px;
+  margin-bottom: 16px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  span:nth-child(1) {
+    background: rgba(239, 68, 68, 0.56);
+  }
+
+  span:nth-child(2) {
+    background: rgba(234, 179, 8, 0.56);
+  }
+
+  span:nth-child(3) {
+    background: rgba(0, 229, 40, 0.56);
+  }
+`;
+
+const SkeletonHero = styled.div`
+  display: flex;
+  height: 128px;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 14px;
+  margin-bottom: 16px;
+
+  span {
+    display: block;
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  span:first-child {
+    width: 50%;
+    height: 16px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  span:last-child {
+    width: 72%;
+  }
+`;
+
+const PrimaryStrip = styled.div`
+  display: grid;
+  height: 48px;
+  place-items: center;
+  border-radius: 16px;
+  background: ${palette.accent};
+  margin-bottom: 16px;
+
+  span {
+    width: 34%;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const MutedStrip = styled.div`
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+`;
+
+const FloatCard = styled.div<{ $variant: 'layout' | 'chart' | 'payment' }>`
+  position: absolute;
+  width: ${(props) => (props.$variant === 'chart' ? '210px' : '224px')};
+  border: 1px solid
+    ${(props) =>
+      props.$variant === 'chart' ? 'rgba(0, 229, 40, 0.22)' : 'rgba(255, 255, 255, 0.1)'};
+  border-radius: 18px;
+  background: ${(props) => (props.$variant === 'chart' ? '#050505' : '#111111')};
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.42);
+  padding: 20px;
+  color: ${palette.text};
+  transform-style: preserve-3d;
+
+  ${(props) =>
+    props.$variant === 'layout' &&
+    css`
+      top: 64px;
+      right: -92px;
+      animation: ${floatOne} 6s ease-in-out infinite;
+    `}
+
+  ${(props) =>
+    props.$variant === 'chart' &&
+    css`
+      top: 196px;
+      left: -78px;
+      animation: ${floatTwo} 8s ease-in-out infinite;
+    `}
+
+  ${(props) =>
+    props.$variant === 'payment' &&
+    css`
+      right: -66px;
+      bottom: 78px;
+      animation: ${floatThree} 7s ease-in-out infinite;
+    `}
+
+  @media (max-width: 599px) {
+    width: 196px;
+    padding: 16px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -255,263 +340,93 @@ const VisualPanel = styled.div`
   }
 `;
 
-const Browser = styled.div`
-  position: relative;
-  height: 100%;
-  min-height: inherit;
-  border-radius: 24px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #f6f8fb;
-  color: ${palette.ink};
-  transition: transform 220ms ease-out;
-
-  @media (max-width: 899px), (prefers-reduced-motion: reduce) {
-    transform: none !important;
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    min-height: 0;
-    border-radius: 20px;
-  }
-`;
-
-const BrowserTop = styled.div`
-  height: 48px;
+const FloatHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  border-bottom: 1px solid rgba(7, 10, 18, 0.08);
-  background: rgba(255, 255, 255, 0.78);
+  gap: 12px;
+  margin-bottom: 16px;
+`;
 
-  @media (min-width: 1024px) and (max-height: 820px) {
-    height: 40px;
-    padding: 0 14px;
+const IconBox = styled.div<{ $accent?: boolean }>`
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 10px;
+  background: ${(props) => (props.$accent ? palette.accent : 'rgba(255, 255, 255, 0.05)')};
+  color: ${(props) => (props.$accent ? palette.ink : palette.text)};
+
+  svg {
+    font-size: 20px;
   }
 `;
 
-const WindowDots = styled.div`
+const MiniLine = styled.span<{ $width?: string; $accent?: boolean }>`
+  display: block;
+  width: ${(props) => props.$width ?? '100%'};
+  height: 9px;
+  border-radius: 999px;
+  background: ${(props) =>
+    props.$accent ? 'rgba(0, 229, 40, 0.5)' : 'rgba(255, 255, 255, 0.08)'};
+`;
+
+const BarChart = styled.div`
   display: flex;
-  gap: 7px;
+  align-items: end;
+  gap: 8px;
+  height: 64px;
+  margin-top: 8px;
 
   span {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #c5ccd5;
+    flex: 1;
+    border-radius: 5px 5px 2px 2px;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  span:first-child {
+  span:nth-child(1) {
+    height: 34%;
+  }
+
+  span:nth-child(2) {
+    height: 66%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  span:nth-child(3) {
+    height: 50%;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  span:nth-child(4) {
+    height: 100%;
     background: ${palette.accent};
+    box-shadow: 0 0 18px rgba(0, 229, 40, 0.3);
   }
 `;
 
-const UrlPill = styled.div`
-  min-width: 160px;
-  border-radius: 999px;
-  padding: 8px 12px;
-  background: #e8ecef;
-  color: #667184;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-align: center;
-
-  @media (max-width: 430px) {
-    min-width: 112px;
-    font-size: 0.66rem;
-  }
+const PaymentPreview = styled.div`
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 12px;
 `;
 
-const PreviewBody = styled.div`
-  padding: clamp(14px, 1.8vw, 20px);
-  display: grid;
-  gap: 12px;
-
-  @media (max-width: 599px) {
-    gap: 12px;
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    padding: 12px;
-    gap: 10px;
-  }
-`;
-
-const CampaignHero = styled.div`
-  border-radius: 22px;
-  padding: clamp(18px, 2.3vw, 24px);
-  background:
-    linear-gradient(135deg, rgba(8, 203, 0, 0.2), transparent 42%),
-    ${palette.ink};
-  color: ${palette.text};
-  min-height: 188px;
-  position: relative;
-  overflow: hidden;
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    min-height: 154px;
-    border-radius: 18px;
-    padding: 16px;
-  }
-`;
-
-const LandingTitle = styled(Typography)`
-  && {
-    position: relative;
-    z-index: 1;
-    max-width: 360px;
-    font-size: clamp(1.45rem, 2.45vw, 2.25rem);
-    line-height: 1.08;
-
-    @media (min-width: 1024px) and (max-height: 820px) {
-      max-width: 330px;
-      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
-    }
-  }
-`;
-
-const FakeCta = styled.div`
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
+const PaymentButton = styled.div`
+  display: flex;
+  width: 75%;
+  height: 34px;
   align-items: center;
-  gap: 8px;
-  width: fit-content;
-  min-height: 38px;
-  margin-top: 14px;
-  padding: 9px 14px;
-  border-radius: 999px;
-  background: ${palette.accent};
-  color: ${palette.ink};
-  font-size: 0.86rem;
-  font-weight: 850;
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    min-height: 34px;
-    margin-top: 12px;
-    padding: 7px 12px;
-    font-size: 0.78rem;
-  }
-`;
-
-const SignalGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-
-  @media (max-width: 430px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const SignalCard = styled.div`
-  border-radius: 18px;
-  border: 1px solid rgba(7, 10, 18, 0.08);
-  background: #ffffff;
-  padding: 12px;
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    border-radius: 14px;
-    padding: 10px;
-  }
-`;
-
-const SignalValue = styled.div`
-  color: ${palette.ink};
-  font-size: 0.92rem;
-  font-weight: 900;
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    font-size: 0.84rem;
-  }
-`;
-
-const JourneyBoard = styled.div`
-  display: grid;
-  grid-template-columns: 0.92fr 1fr;
-  gap: 12px;
-
-  @media (max-width: 599px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    display: none;
-  }
-`;
-
-const BriefingCard = styled.div`
-  border-radius: 20px;
-  border: 1px solid rgba(7, 10, 18, 0.08);
-  background: #ffffff;
-  padding: 16px;
-  min-height: 124px;
-`;
-
-const Line = styled.div<{ $width: string; $accent?: boolean }>`
-  width: ${(props) => props.$width};
-  height: 10px;
-  border-radius: 999px;
-  margin-top: 11px;
-  background: ${(props) =>
-    props.$accent ? palette.accent : "rgba(7, 10, 18, 0.11)"};
-`;
-
-const ToolGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-`;
-
-const ToolCard = styled.div`
-  border-radius: 16px;
-  padding: 11px;
-  border: 1px solid rgba(7, 10, 18, 0.08);
-  background: #ffffff;
-  color: #465160;
-  font-size: 0.78rem;
-  font-weight: 820;
-`;
-
-const FloatingLeadCard = styled.div`
-  position: absolute;
-  right: -18px;
-  bottom: 28px;
-  z-index: 2;
-  width: min(250px, 74%);
-  border-radius: 20px;
-  padding: 14px;
-  border: 1px solid rgba(8, 203, 0, 0.28);
-  background: rgba(7, 10, 18, 0.92);
-  color: ${palette.text};
-  backdrop-filter: blur(16px);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
-
-  @media (max-width: 599px) {
-    position: static;
-    width: auto;
-    margin-top: 12px;
-  }
-
-  @media (min-width: 1024px) and (max-height: 820px) {
-    display: none;
-  }
+  border-radius: 10px;
+  background: rgba(0, 229, 40, 0.18);
+  padding: 0 12px;
 `;
 
 type HeroSectionProps = {
   onContactClick: () => void;
 };
 
-const trustItems = [
-  "+5 anos de experiência",
-  "Briefing em menos de 2 minutos",
-  "Solução sob medida",
-];
-const flowItems = ["Ideia", "Briefing", "Proposta", "Entrega"];
-
 export function HeroSection({ onContactClick }: HeroSectionProps) {
-  const [mouse, setMouse] = useState({ x: 50, y: 36, active: 0 });
   const prefersReducedMotion = useReducedMotion();
 
   const copyVariants: Variants = {
@@ -536,217 +451,154 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
     },
   };
 
-  const mockupVariants: Variants = {
-    hidden: prefersReducedMotion
-      ? { opacity: 1 }
-      : { opacity: 0, y: 28, scale: 0.97 },
+  const visualVariants: Variants = {
+    hidden: prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 34, scale: 0.96 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: motionTokens.duration.slow,
-        delay: 0.24,
+        duration: 0.8,
+        delay: 0.18,
         ease: motionTokens.softEase,
       },
     },
   };
 
-  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setMouse({
-      x: ((event.clientX - rect.left) / rect.width) * 100,
-      y: ((event.clientY - rect.top) / rect.height) * 100,
-      active: 1,
-    });
+  const scrollToServices = () => {
+    document.querySelector('#servicos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const spotlightStyle = {
-    "--mouse-x": `${mouse.x}%`,
-    "--mouse-y": `${mouse.y}%`,
-    "--spotlight-opacity": mouse.active,
-  } as CSSProperties;
-
-  const parallaxStyle = prefersReducedMotion
-    ? undefined
-    : ({
-        transform: `translate3d(${((mouse.x - 50) / 50) * 7}px, ${((mouse.y - 36) / 50) * 7}px, 0)`,
-      } as CSSProperties);
-
   return (
-    <Hero
-      id="inicio"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setMouse((current) => ({ ...current, active: 0 }))}
-    >
-      <Spotlight style={spotlightStyle} />
+    <Hero id="inicio" aria-labelledby="hero-title">
       <Container maxWidth="xl">
         <HeroGrid>
           <HeroCopy variants={copyVariants} initial="hidden" animate="visible">
             <AnimatedBlock variants={itemVariants}>
               <Badge>
-                <RocketLaunchRoundedIcon />
-                Landing pages, sites e sistemas para pequenos negócios
+                <FlashOnRoundedIcon />
+                Soluções Web Premium
               </Badge>
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
-              <HeroTitle variant="h1" mt={2}>
-                Sites e soluções web para negócios que querem{" "}
-                <span>vender melhor</span>
+              <HeroTitle id="hero-title" variant="h1">
+                <span className="desktop-copy">
+                  Sites e soluções <br />
+                  web para negócios <br />
+                  que querem <br />
+                  <strong>vender melhor</strong>
+                </span>
+                <span className="mobile-copy">
+                  Sites e soluções <br />
+                  web para <br />
+                  negócios <br />
+                  que querem <br />
+                  <strong>vender melhor</strong>
+                </span>
               </HeroTitle>
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
               <HeroText>
-                landing pages, sites institucionais e soluções sob medida para
-                divulgar seus serviços, captar clientes e organizar processos
-                com uma presença mais profissional.
+                Landing pages, sites institucionais e soluções sob medida para divulgar seus
+                serviços, captar clientes e organizar processos.
               </HeroText>
             </AnimatedBlock>
 
             <AnimatedBlock variants={itemVariants}>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={1.5}
-                mt={3}
-              >
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} mt={4}>
                 <Button
                   variant="contained"
                   color="primary"
-                  endIcon={<ArrowForwardIcon />}
+                  endIcon={<ArrowOutwardRoundedIcon />}
                   onClick={onContactClick}
                   size="large"
-                  sx={{ minHeight: 54 }}
+                  sx={{ minHeight: 56, px: 3.1 }}
                 >
                   Começar briefing rápido
                 </Button>
                 <Button
                   variant="outlined"
                   color="inherit"
-                  endIcon={<KeyboardArrowDownIcon />}
-                  href="#planos"
+                  endIcon={<KeyboardArrowDownRoundedIcon />}
+                  onClick={scrollToServices}
                   size="large"
                   sx={{
-                    minHeight: 54,
-                    borderColor: "rgba(255,255,255,0.22)",
+                    minHeight: 56,
+                    px: 3.1,
+                    borderColor: 'rgba(255,255,255,0.22)',
                     color: palette.text,
-                    "&:hover": {
+                    '&:hover': {
                       borderColor: palette.accent,
-                      bgcolor: "rgba(8,203,0,0.08)",
+                      bgcolor: 'rgba(0,229,40,0.08)',
                     },
                   }}
                 >
                   Ver soluções
                 </Button>
               </Stack>
-
-              <TrustIndicators aria-label="Indicadores de confiança">
-                {trustItems.map((item) => (
-                  <TrustItem key={item}>
-                    <VerifiedOutlinedIcon />
-                    {item}
-                  </TrustItem>
-                ))}
-              </TrustIndicators>
             </AnimatedBlock>
           </HeroCopy>
 
-          <VisualWrap
-            variants={mockupVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <VisualPanel aria-label="Preview de jornada de captação para clientes">
-              <Browser style={parallaxStyle}>
-                <BrowserTop>
-                  <WindowDots aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </WindowDots>
-                  <UrlPill>hcwebsolutions.com.br</UrlPill>
-                </BrowserTop>
+          <VisualStage variants={visualVariants} initial="hidden" animate="visible">
+            <Phone aria-label="Preview visual de uma solução web premium">
+              <PhoneScreen>
+                <BrowserBar aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </BrowserBar>
+                <SkeletonHero aria-hidden="true">
+                  <span />
+                  <span />
+                </SkeletonHero>
+                <PrimaryStrip aria-hidden="true">
+                  <span />
+                </PrimaryStrip>
+                <MutedStrip aria-hidden="true" />
+              </PhoneScreen>
 
-                <PreviewBody>
-                  <CampaignHero>
-                    <Typography
-                      color={palette.accent}
-                      fontWeight={850}
-                      fontSize="0.78rem"
-                      mb={1.2}
-                    >
-                      Página de alta conversão
-                    </Typography>
-                    <LandingTitle variant="h2">
-                      Oferta clara, WhatsApp pronto e confiança visual
-                    </LandingTitle>
-                    <FakeCta>
-                      Falar no WhatsApp{" "}
-                      <ArrowForwardIcon sx={{ fontSize: 18 }} />
-                    </FakeCta>
-                  </CampaignHero>
+              <FloatCard $variant="layout" aria-hidden="true">
+                <FloatHeader>
+                  <IconBox>
+                    <DashboardCustomizeRoundedIcon />
+                  </IconBox>
+                  <MiniLine $width="104px" />
+                </FloatHeader>
+                <MiniLine />
+                <MiniLine $width="80%" style={{ marginTop: 8 }} />
+              </FloatCard>
 
-                  <SignalGrid>
-                    <SignalCard>
-                      <SignalValue>+ Leads</SignalValue>
-                      <Typography color="#667184" fontSize="0.76rem" mt={0.8}>
-                        Mais pedidos de contato
-                      </Typography>
-                    </SignalCard>
-                    <SignalCard>
-                      <SignalValue>Briefing rápido</SignalValue>
-                      <Typography color="#667184" fontSize="0.76rem" mt={0.8}>
-                        Menos fricção
-                      </Typography>
-                    </SignalCard>
-                    <SignalCard>
-                      <SignalValue>Mobile first</SignalValue>
-                      <Typography color="#667184" fontSize="0.76rem" mt={0.8}>
-                        Pronto para divulgar
-                      </Typography>
-                    </SignalCard>
-                  </SignalGrid>
+              <FloatCard $variant="chart" aria-hidden="true">
+                <FloatHeader>
+                  <IconBox $accent>
+                    <BarChartRoundedIcon />
+                  </IconBox>
+                  <MiniLine $width="70px" />
+                </FloatHeader>
+                <BarChart>
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </BarChart>
+              </FloatCard>
 
-                  <JourneyBoard>
-                    <BriefingCard>
-                      <Typography color={palette.ink} fontWeight={900}>
-                        Resumo do briefing
-                      </Typography>
-                      <Line $width="86%" />
-                      <Line $width="62%" />
-                      <Line $width="42%" $accent />
-                    </BriefingCard>
-
-                    <ToolGrid>
-                      {[
-                        "Oferta clara",
-                        "CTA direto",
-                        "Prova visual",
-                        "Métricas",
-                      ].map((item) => (
-                        <ToolCard key={item}>{item}</ToolCard>
-                      ))}
-                    </ToolGrid>
-                  </JourneyBoard>
-                </PreviewBody>
-              </Browser>
-
-              <FloatingLeadCard>
-                <Typography
-                  color={palette.textMuted}
-                  fontSize="0.78rem"
-                  fontWeight={780}
-                >
-                  Próximo passo
-                </Typography>
-                <Typography fontWeight={900} mt={0.6}>
-                  O usuário responde um briefing simples e chega ao WhatsApp com
-                  a ideia organizada.
-                </Typography>
-              </FloatingLeadCard>
-            </VisualPanel>
-          </VisualWrap>
+              <FloatCard $variant="payment" aria-hidden="true">
+                <FloatHeader>
+                  <IconBox>
+                    <CreditCardRoundedIcon />
+                  </IconBox>
+                  <MiniLine $width="86px" />
+                </FloatHeader>
+                <PaymentPreview />
+                <PaymentButton>
+                  <MiniLine $width="54%" $accent />
+                </PaymentButton>
+              </FloatCard>
+            </Phone>
+          </VisualStage>
         </HeroGrid>
       </Container>
     </Hero>

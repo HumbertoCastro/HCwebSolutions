@@ -1,11 +1,11 @@
-import { CssBaseline, GlobalStyles } from '@mui/material';
-import { AnimatePresence } from 'framer-motion';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { FloatingWhatsAppButton } from './components/FloatingWhatsAppButton';
-import { PageTransition } from './components/PageTransition';
-import { ContactPage } from './pages/ContactPage';
-import { HomePage } from './pages/HomePage';
-import { palette } from './theme';
+import { CssBaseline, GlobalStyles } from "@mui/material";
+import { AnimatePresence } from "framer-motion";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { FloatingWhatsAppButton } from "./components/FloatingWhatsAppButton";
+import { PageTransition } from "./components/PageTransition";
+import { ContactPage } from "./pages/ContactPage";
+import { HomePage } from "./pages/HomePage";
+import { palette } from "./theme";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -40,29 +40,33 @@ function App() {
       <CssBaseline />
       <GlobalStyles
         styles={{
-          '*': {
-            boxSizing: 'border-box',
+          "*": {
+            boxSizing: "border-box",
           },
           html: {
-            scrollBehavior: 'smooth',
+            scrollBehavior: "smooth",
             backgroundColor: palette.background,
           },
           body: {
             margin: 0,
             minWidth: 320,
             backgroundColor: palette.background,
-            overflowX: 'hidden',
+            fontFamily:
+              'Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            WebkitFontSmoothing: "antialiased",
+            MozOsxFontSmoothing: "grayscale",
+            overflowX: "clip",
           },
-          '#root': {
-            minHeight: '100vh',
-            overflowX: 'hidden',
+          "#root": {
+            minHeight: "100vh",
+            overflowX: "clip",
           },
-          '::selection': {
+          "::selection": {
             background: palette.accent,
             color: palette.ink,
           },
-          'a, button': {
-            WebkitTapHighlightColor: 'transparent',
+          "a, button": {
+            WebkitTapHighlightColor: "transparent",
           },
         }}
       />

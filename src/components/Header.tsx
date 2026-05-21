@@ -1,55 +1,46 @@
 import { useEffect, useState } from 'react';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
-import {
-  Box,
-  Button,
-  Container,
-  Drawer,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemText,
-  Stack,
-} from '@mui/material';
+import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { Button, Container, IconButton } from '@mui/material';
 import styled from 'styled-components';
 import { palette } from '../theme';
 import type { NavItem } from '../types';
 
 const navItems: NavItem[] = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Cases', href: '#projetos' },
-  { label: 'Quem Somos', href: '#quem-somos' },
+  { label: 'Serviços', href: '#servicos' },
+  { label: 'Cases', href: '#cases' },
+  { label: 'Sobre', href: '#quem-somos' },
   { label: 'Planos', href: '#planos' },
-  { label: 'Contato', href: '/contato' },
 ];
 
 const HeaderShell = styled.header<{ $scrolled: boolean }>`
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 30;
+  left: 0;
+  right: 0;
+  z-index: 50;
   border-bottom: 1px solid
-    ${(props) => (props.$scrolled ? 'rgba(255, 255, 255, 0.14)' : 'rgba(255, 255, 255, 0.08)')};
-  background: ${(props) =>
-    props.$scrolled ? 'rgba(5, 7, 13, 0.92)' : 'rgba(5, 7, 13, 0.72)'};
-  backdrop-filter: blur(22px);
-  box-shadow: ${(props) => (props.$scrolled ? '0 18px 60px rgba(0, 0, 0, 0.22)' : 'none')};
+    ${(props) => (props.$scrolled ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)')};
+  background: ${(props) => (props.$scrolled ? 'rgba(5, 5, 5, 0.82)' : 'rgba(5, 5, 5, 0)')};
+  backdrop-filter: ${(props) => (props.$scrolled ? 'blur(18px)' : 'none')};
   transition:
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+    background 260ms ease,
+    border-color 260ms ease,
+    backdrop-filter 260ms ease,
+    padding 260ms ease;
 `;
 
-const HeaderInner = styled.div`
-  min-height: 82px;
+const HeaderInner = styled.div<{ $scrolled: boolean }>`
+  min-height: ${(props) => (props.$scrolled ? '72px' : '88px')};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(22px, 3vw, 46px);
+  gap: clamp(18px, 3vw, 44px);
+  transition: min-height 260ms ease;
 
-  @media (max-width: 1099px) {
-    min-height: 72px;
+  @media (max-width: 899px) {
+    min-height: 74px;
   }
 `;
 
@@ -59,17 +50,13 @@ const Logo = styled.a`
   gap: 10px;
   color: ${palette.text};
   text-decoration: none;
-  font-size: clamp(1.08rem, 1.7vw, 1.34rem);
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
   font-weight: 900;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   white-space: nowrap;
 
   span {
     color: ${palette.accent};
-  }
-
-  @media (max-width: 430px) {
-    font-size: 1rem;
   }
 `;
 
@@ -78,7 +65,7 @@ const LogoIcon = styled.img`
   height: 42px;
   border-radius: 14px;
   object-fit: cover;
-  box-shadow: 0 14px 36px rgba(8, 203, 0, 0.2);
+  box-shadow: 0 14px 38px rgba(0, 229, 40, 0.2);
 
   @media (max-width: 430px) {
     width: 38px;
@@ -88,47 +75,34 @@ const LogoIcon = styled.img`
 `;
 
 const Nav = styled.nav`
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   padding: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(14px);
 
-  @media (max-width: 1099px) {
+  @media (max-width: 899px) {
     display: none;
   }
 `;
 
 const NavLink = styled.a`
   position: relative;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
   color: ${palette.textMuted};
   text-decoration: none;
-  font-size: 0.94rem;
-  font-weight: 720;
-  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0 15px;
   border-radius: 999px;
   transition:
     color 180ms ease,
-    background 180ms ease;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 6px;
-    height: 2px;
-    border-radius: 999px;
-    background: ${palette.accent};
-    transform: scaleX(0);
-    transform-origin: center;
-    opacity: 0;
-    transition:
-      transform 220ms ease,
-      opacity 220ms ease;
-  }
+    background-color 180ms ease;
 
   &:hover,
   &:focus-visible {
@@ -136,20 +110,13 @@ const NavLink = styled.a`
     background: rgba(255, 255, 255, 0.07);
     outline: none;
   }
-
-  &:hover::after,
-  &:focus-visible::after {
-    opacity: 1;
-    transform: scaleX(1);
-  }
 `;
 
-const DesktopActions = styled.div`
+const DesktopAction = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
 
-  @media (max-width: 1099px) {
+  @media (max-width: 899px) {
     display: none;
   }
 `;
@@ -157,26 +124,70 @@ const DesktopActions = styled.div`
 const MobileButton = styled(IconButton)`
   && {
     display: none;
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     color: ${palette.text};
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
 
-    @media (max-width: 1099px) {
+    @media (max-width: 899px) {
       display: inline-flex;
     }
   }
 `;
 
-const DrawerPanel = styled(Box)`
-  width: min(86vw, 360px);
-  min-height: 100%;
+const MobileOverlay = styled.div<{ $open: boolean }>`
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: none;
+  padding: 104px 24px 32px;
   background:
-    radial-gradient(circle at top right, rgba(8, 203, 0, 0.14), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(0, 229, 40, 0.14), transparent 28%),
     ${palette.background};
+  opacity: ${(props) => (props.$open ? 1 : 0)};
+  pointer-events: ${(props) => (props.$open ? 'auto' : 'none')};
+  transform: ${(props) => (props.$open ? 'scale(1)' : 'scale(0.98)')};
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+
+  @media (max-width: 899px) {
+    display: block;
+  }
+`;
+
+const MobileNav = styled.nav`
+  display: grid;
+  gap: 12px;
+`;
+
+const MobileLink = styled.a`
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
   color: ${palette.text};
-  padding: 24px 20px;
+  text-decoration: none;
+  padding: 0 18px;
+  font-size: 1.22rem;
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: ${palette.accent};
+    border-color: rgba(0, 229, 40, 0.36);
+    background: rgba(0, 229, 40, 0.08);
+    outline: none;
+  }
 `;
 
 type HeaderProps = {
@@ -188,7 +199,7 @@ export function Header({ onContactClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 18);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -196,107 +207,101 @@ export function Header({ onContactClick }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (href: string) => {
-    setIsOpen(false);
-    if (href === '/contato') {
-      onContactClick();
-      return;
-    }
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
 
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const handleSectionNavigate = (href: string) => {
+    setIsOpen(false);
+
+    const section = document.querySelector(href);
+    section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleContact = () => {
+    setIsOpen(false);
+    onContactClick();
   };
 
   return (
-    <HeaderShell $scrolled={isScrolled}>
-      <Container maxWidth="xl">
-        <HeaderInner>
-          <Logo href="#inicio" aria-label="HC Web Solutions - início">
-            <LogoIcon src="/icon.png" alt="" aria-hidden="true" />
-            HC Web <span>Solutions</span>
-          </Logo>
-
-          <Nav aria-label="Navegação principal">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.href}
-                href={item.href}
-                onClick={(event) => {
-                  if (item.href === '/contato') {
-                    event.preventDefault();
-                    onContactClick();
-                  }
-                }}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </Nav>
-
-          <DesktopActions>
-            <Button
-              variant="contained"
-              color="primary"
-              endIcon={<ArrowForwardIcon />}
-              onClick={onContactClick}
-              sx={{ minHeight: 52, px: 2.8 }}
+    <>
+      <HeaderShell $scrolled={isScrolled}>
+        <Container maxWidth="xl">
+          <HeaderInner $scrolled={isScrolled}>
+            <Logo
+              href="#inicio"
+              aria-label="HC Web Solutions - início"
+              onClick={(event) => {
+                event.preventDefault();
+                handleSectionNavigate('#inicio');
+              }}
             >
-              Começar briefing
-            </Button>
-          </DesktopActions>
-
-          <MobileButton aria-label="Abrir menu" onClick={() => setIsOpen(true)}>
-            <MenuIcon />
-          </MobileButton>
-        </HeaderInner>
-      </Container>
-
-      <Drawer anchor="right" open={isOpen} onClose={() => setIsOpen(false)}>
-        <DrawerPanel role="presentation">
-          <Stack direction="row" alignItems="center" justifyContent="space-between" mb={4}>
-            <Logo href="#inicio" onClick={() => setIsOpen(false)}>
               <LogoIcon src="/icon.png" alt="" aria-hidden="true" />
               HC Web <span>Solutions</span>
             </Logo>
-            <IconButton aria-label="Fechar menu" onClick={() => setIsOpen(false)} color="inherit">
-              <CloseIcon />
-            </IconButton>
-          </Stack>
 
-          <List disablePadding>
-            {navItems.map((item) => (
-              <ListItemButton
-                key={item.href}
-                onClick={() => handleNavigate(item.href)}
-                sx={{
-                  borderRadius: 3,
-                  mb: 1,
-                  minHeight: 52,
-                  color: palette.text,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  bgcolor: 'rgba(255,255,255,0.035)',
-                  '&:hover': { bgcolor: 'rgba(255,255,255,0.07)', borderColor: 'rgba(8,203,0,0.35)' },
-                }}
+            <Nav aria-label="Navegação principal">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleSectionNavigate(item.href);
+                  }}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </Nav>
+
+            <DesktopAction>
+              <Button
+                variant="contained"
+                color="primary"
+                endIcon={<ArrowOutwardRoundedIcon />}
+                onClick={handleContact}
+                sx={{ minHeight: 46, px: 2.7 }}
               >
-                <ListItemText primary={item.label} />
-              </ListItemButton>
-            ))}
-          </List>
+                Iniciar Projeto
+              </Button>
+            </DesktopAction>
 
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            endIcon={<ArrowForwardIcon />}
-            onClick={() => {
-              setIsOpen(false);
-              onContactClick();
-            }}
-            sx={{ mt: 3 }}
-          >
-            Começar briefing
-          </Button>
-        </DrawerPanel>
-      </Drawer>
-    </HeaderShell>
+            <MobileButton
+              aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
+              onClick={() => setIsOpen((current) => !current)}
+            >
+              {isOpen ? <CloseRoundedIcon /> : <MenuRoundedIcon />}
+            </MobileButton>
+          </HeaderInner>
+        </Container>
+      </HeaderShell>
+
+      <MobileOverlay $open={isOpen} aria-hidden={!isOpen}>
+        <MobileNav aria-label="Navegação mobile">
+          {[...navItems, { label: 'Contato', href: '/contato' }].map((item) => (
+            <MobileLink
+              key={item.href}
+              href={item.href}
+              onClick={(event) => {
+                event.preventDefault();
+                if (item.href === '/contato') {
+                  handleContact();
+                } else {
+                  handleSectionNavigate(item.href);
+                }
+              }}
+            >
+              {item.label}
+              <ArrowOutwardRoundedIcon fontSize="small" />
+            </MobileLink>
+          ))}
+        </MobileNav>
+      </MobileOverlay>
+    </>
   );
 }

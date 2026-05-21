@@ -1,19 +1,19 @@
 import { createTheme } from '@mui/material/styles';
 
 export const palette = {
-  background: '#05070d',
-  backgroundSoft: '#090d15',
-  surface: '#101620',
-  surfaceElevated: '#151d29',
+  background: '#050505',
+  backgroundSoft: '#0a0a0a',
+  surface: '#111111',
+  surfaceElevated: '#171717',
   surfaceMuted: '#dfe3e8',
   border: 'rgba(255, 255, 255, 0.12)',
-  borderStrong: 'rgba(8, 203, 0, 0.38)',
-  text: '#f7f9fb',
-  textMuted: '#aab3c2',
+  borderStrong: 'rgba(0, 229, 40, 0.38)',
+  text: '#ffffff',
+  textMuted: '#a3a3a3',
   textSoft: '#6f7a8c',
-  accent: '#08CB00',
-  accentDark: '#069b00',
-  ink: '#070a12',
+  accent: '#00E528',
+  accentDark: '#00c222',
+  ink: '#050505',
 };
 
 export const theme = createTheme({
@@ -44,7 +44,7 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily:
-      'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      'Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     h1: {
       fontWeight: 800,
       letterSpacing: 0,
@@ -95,9 +95,9 @@ export const theme = createTheme({
           },
         },
         containedPrimary: {
-          boxShadow: '0 0 0 1px rgba(8, 203, 0, 0.25), 0 16px 42px rgba(8, 203, 0, 0.18)',
+          boxShadow: '0 0 0 1px rgba(0, 229, 40, 0.25), 0 16px 42px rgba(0, 229, 40, 0.18)',
           '&:hover': {
-            boxShadow: '0 0 0 1px rgba(8, 203, 0, 0.36), 0 20px 54px rgba(8, 203, 0, 0.22)',
+            boxShadow: '0 0 0 1px rgba(0, 229, 40, 0.36), 0 20px 54px rgba(0, 229, 40, 0.22)',
           },
         },
       },
