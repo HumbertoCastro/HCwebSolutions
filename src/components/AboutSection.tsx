@@ -8,7 +8,6 @@ import {
   useReducedMotion,
   useSpring,
   useTransform,
-  type Variants,
 } from "framer-motion";
 import styled from "styled-components";
 import { motionTokens } from "../motion";
@@ -120,7 +119,10 @@ const StatLabel = styled.span`
 const ProfileCard = styled.aside`
   border-radius: 28px;
   border: 1px solid rgba(7, 10, 18, 0.12);
-  background: ${palette.ink};
+  background:
+    radial-gradient(circle at 50% 0%, rgba(8, 203, 0, 0.12), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 28%),
+    ${palette.ink};
   color: ${palette.text};
   padding: clamp(22px, 3vw, 34px);
   box-shadow: 0 24px 80px rgba(7, 10, 18, 0.16);
@@ -136,57 +138,51 @@ const ProfileCard = styled.aside`
   }
 `;
 
-const Avatar = styled.div`
+const Avatar = styled.figure`
   position: relative;
   overflow: hidden;
-  height: 230px;
+  height: clamp(340px, 37vw, 470px);
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background:
-    linear-gradient(135deg, rgba(8, 203, 0, 0.22), rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.04);
-  display: grid;
-  place-items: center;
+    radial-gradient(circle at 50% 28%, rgba(8, 203, 0, 0.22), transparent 34%),
+    #050505;
   margin-bottom: 24px;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    z-index: 1;
+    border: 1px solid rgba(8, 203, 0, 0.16);
+    border-radius: 18px;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 1;
+    height: 36%;
+    background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.78));
+    pointer-events: none;
+  }
+
+  @media (max-width: 899px) {
+    height: min(104vw, 520px);
+  }
 `;
 
-const CodeField = styled.div`
-  position: absolute;
-  inset: 18px;
-  display: grid;
-  align-content: center;
-  gap: 8px;
-  color: rgba(247, 249, 251, 0.34);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 0.77rem;
-  line-height: 1.2;
-`;
-
-const CodeLine = styled(motion.span)`
+const ProfilePhoto = styled.img`
   display: block;
-  width: fit-content;
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const CodeToken = styled.span`
-  color: ${palette.accent};
-`;
-
-const Initials = styled.div`
-  position: relative;
-  z-index: 1;
-  width: 112px;
-  height: 112px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: ${palette.ink};
-  background: ${palette.accent};
-  font-size: 2.35rem;
-  font-weight: 900;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.015);
+  filter: saturate(1.04) contrast(1.03);
 `;
 
 const CredentialList = styled.ul`
@@ -297,20 +293,6 @@ function AnimatedTitleText({ text, accent = false, delay = 0 }: AnimatedTitleTex
   );
 }
 
-const codeLineVariants: Variants = {
-  hidden: { opacity: 0, x: -18, filter: "blur(4px)" },
-  visible: (index: number) => ({
-    opacity: 1,
-    x: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.58,
-      delay: 0.16 + index * 0.11,
-      ease: motionTokens.softEase,
-    },
-  }),
-};
-
 export function AboutSection() {
   const credentials = [
     "+6 anos de experiência",
@@ -339,13 +321,6 @@ export function AboutSection() {
       suffix: " anos",
       label: "de experiência no mercado de desenvolvimento web",
     },
-  ];
-
-  const codeLines = [
-    "<section data-brand=\"HC\">",
-    "const kpi = ['+20', '+65k', '+6'];",
-    "deploy({ design, codigo, resultado });",
-    "</section>",
   ];
 
   return (
@@ -388,32 +363,12 @@ export function AboutSection() {
 
           <Reveal delay={0.12}>
             <ProfileCard>
-              <Avatar aria-hidden="true">
-                <CodeField>
-                  {codeLines.map((line, index) => (
-                    <CodeLine
-                      key={line}
-                      custom={index}
-                      variants={codeLineVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, amount: 0.7 }}
-                    >
-                      {line.includes("kpi") ? (
-                        <>
-                          const <CodeToken>kpi</CodeToken> = ['+20', '+65k', '+6'];
-                        </>
-                      ) : line.includes("deploy") ? (
-                        <>
-                          <CodeToken>deploy</CodeToken>({`{ design, codigo, resultado }`});
-                        </>
-                      ) : (
-                        line
-                      )}
-                    </CodeLine>
-                  ))}
-                </CodeField>
-                <Initials>HC</Initials>
+              <Avatar>
+                <ProfilePhoto
+                  src="/about/humberto-hc-portrait.png"
+                  alt="Retrato de Humberto Castro, fundador da HC Web Solutions"
+                  loading="lazy"
+                />
               </Avatar>
               <Typography
                 color={palette.accent}

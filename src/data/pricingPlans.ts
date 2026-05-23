@@ -3,7 +3,7 @@ import type { PricingPlan } from "../types";
 export const pricingPlans: PricingPlan[] = [
   {
     name: "Landing Page Profissional",
-    price: "A partir de R$ 750",
+    price: "A partir de R$ 849,99",
     description:
       "Para negócios que precisam divulgar uma oferta, captar contatos e transformar visitas em conversas pelo WhatsApp.",
     features: [

@@ -1,54 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
 import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
-import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { Container, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+import { projects } from '../data/projects';
 import { palette } from '../theme';
+import type { Project } from '../types';
 
-type CaseItem = {
-  id: number;
-  title: string;
-  category: string;
-  desc: string;
-  glow: string;
+const CASE_COUNT = projects.length;
+
+type AnimatedWordsProps = {
+  active: boolean;
+  text: string;
 };
 
-const MOCK_CASES: CaseItem[] = [
-  {
-    id: 1,
-    title: 'Fintech Dashboard',
-    category: 'Web App',
-    desc: 'Interface de alta performance para gestão financeira complexa.',
-    glow: 'rgba(59, 130, 246, 0.22)',
-  },
-  {
-    id: 2,
-    title: 'E-commerce Premium',
-    category: 'Plataforma',
-    desc: 'Experiência de compra fluida com foco absoluto em conversão e luxo.',
-    glow: 'rgba(168, 85, 247, 0.22)',
-  },
-  {
-    id: 3,
-    title: 'SaaS Analytics',
-    category: 'Interface',
-    desc: 'Visualização de dados em tempo real com arquitetura escalável.',
-    glow: 'rgba(0, 229, 40, 0.2)',
-  },
-  {
-    id: 4,
-    title: 'Logistics ERP',
-    category: 'Sistema Web',
-    desc: 'Gestão de frota e rotas com integração de mapas 3D e tracking.',
-    glow: 'rgba(249, 115, 22, 0.22)',
-  },
-];
+const titleScale = keyframes`
+  to {
+    transform: scale(1);
+  }
+`;
+
+const wordFadeIn = keyframes`
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+`;
 
 const Section = styled.section`
   position: relative;
-  height: ${(MOCK_CASES.length + 1) * 100}vh;
-  min-height: ${(MOCK_CASES.length + 1) * 620}px;
+  height: ${(CASE_COUNT + 1) * 100}vh;
+  min-height: ${(CASE_COUNT + 1) * 620}px;
   background: ${palette.background};
   scroll-margin-top: 90px;
 
@@ -119,7 +102,7 @@ const CaseGrid = styled.div<{ $reverse: boolean }>`
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.05fr);
   gap: clamp(38px, 6vw, 84px);
   align-items: center;
 
@@ -147,6 +130,7 @@ const CaseGrid = styled.div<{ $reverse: boolean }>`
 
 const CaseCopy = styled.div`
   display: flex;
+  min-width: 0;
   flex-direction: column;
   justify-content: center;
 `;
@@ -156,6 +140,7 @@ const Meta = styled.span`
   width: fit-content;
   min-height: 32px;
   align-items: center;
+  gap: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.05);
@@ -166,22 +151,67 @@ const Meta = styled.span`
   font-weight: 800;
 `;
 
-const Title = styled(Typography)`
+const AnimatedTitle = styled(Typography)<{ $active: boolean }>`
   && {
-    max-width: 660px;
+    max-width: 680px;
     margin-top: 24px;
     color: ${palette.text};
     font-size: clamp(2.55rem, 5.2vw, 5.9rem);
     font-weight: 900;
     letter-spacing: -0.055em;
     line-height: 0.98;
+    overflow-wrap: break-word;
     text-wrap: balance;
+    transform: scale(${(props) => (props.$active ? 0.96 : 1)});
+
+    ${(props) =>
+      props.$active &&
+      css`
+        animation: ${titleScale} 1100ms forwards cubic-bezier(0.5, 1, 0.89, 1);
+      `}
+
+    @media (max-width: 599px) {
+      font-size: clamp(2.15rem, 10vw, 2.7rem);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      transform: none;
+    }
+  }
+`;
+
+const Word = styled.span<{ $active: boolean }>`
+  display: inline-block;
+  margin-right: 0.18em;
+  opacity: ${(props) => (props.$active ? 0 : 1)};
+  filter: ${(props) => (props.$active ? 'blur(4px)' : 'blur(0)')};
+  transform: ${(props) => (props.$active ? 'translateY(18px)' : 'translateY(0)')};
+
+  ${(props) =>
+    props.$active &&
+    css`
+      animation: ${wordFadeIn} 780ms calc(var(--word-index) * 72ms) forwards
+        cubic-bezier(0.11, 0, 0.5, 0);
+    `}
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
   }
 `;
 
 const Description = styled(Typography)`
   && {
-    max-width: 520px;
+    max-width: 540px;
     margin-top: 24px;
     color: ${palette.textMuted};
     font-size: clamp(1.04rem, 1.55vw, 1.25rem);
@@ -190,17 +220,39 @@ const Description = styled(Typography)`
   }
 `;
 
-const CaseLink = styled(Link)`
+const TagRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+`;
+
+const Tag = styled.span`
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.045);
+  color: ${palette.textMuted};
+  padding: 7px 11px;
+  font-size: 0.78rem;
+  font-weight: 760;
+`;
+
+const CaseLink = styled.a<{ $accent: string }>`
   display: inline-flex;
   width: fit-content;
-  min-height: 44px;
+  min-height: 46px;
   align-items: center;
   gap: 9px;
   margin-top: 30px;
-  color: ${palette.accent};
+  color: ${(props) => props.$accent};
   text-decoration: none;
-  font-weight: 800;
-  transition: color 180ms ease;
+  font-weight: 860;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 
   svg {
     transition: transform 180ms ease;
@@ -210,24 +262,29 @@ const CaseLink = styled(Link)`
   &:focus-visible {
     color: ${palette.text};
     outline: none;
+    transform: translateY(-2px);
 
     svg {
       transform: translate(3px, -3px);
     }
   }
+
+  &:active {
+    transform: scale(0.96);
+  }
 `;
 
 const PerspectiveBox = styled.div`
-  height: min(58vh, 520px);
-  min-height: 420px;
+  height: min(62vh, 560px);
+  min-height: 430px;
   perspective: 2000px;
 
   &:hover .case-card-even {
-    transform: rotateY(12deg) rotateX(8deg);
+    transform: rotateY(10deg) rotateX(7deg);
   }
 
   &:hover .case-card-odd {
-    transform: rotateY(-12deg) rotateX(8deg);
+    transform: rotateY(-10deg) rotateX(7deg);
   }
 
   @media (max-width: 899px) {
@@ -240,7 +297,7 @@ const CaseCard3d = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 420px;
+  min-height: 430px;
   transform-style: preserve-3d;
   transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
@@ -261,7 +318,7 @@ const Browser = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 30px;
   background: #0a0a0a;
   box-shadow: 0 34px 110px rgba(0, 0, 0, 0.46);
@@ -272,177 +329,152 @@ const BrowserTop = styled.div`
   height: 50px;
   align-items: center;
   gap: 9px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: #111111;
   padding: 0 16px;
 `;
 
-const Dot = styled.span`
+const Dot = styled.span<{ $accent?: string }>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: ${(props) => props.$accent ?? 'rgba(255, 255, 255, 0.14)'};
 `;
 
 const Url = styled.div`
   display: flex;
   height: 26px;
-  min-width: min(230px, 56%);
+  min-width: 0;
+  max-width: min(430px, 72%);
   align-items: center;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.36);
+  color: rgba(255, 255, 255, 0.42);
   padding: 0 12px;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   font-size: 0.68rem;
   margin-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const BrowserBody = styled.div`
   position: relative;
   flex: 1;
-  display: grid;
-  place-items: center;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05), transparent 70%);
-  padding: clamp(22px, 4vw, 34px);
+  background: #111111;
 `;
 
-const InnerLayer = styled.div`
-  position: relative;
-  display: flex;
+const PreviewImage = styled.img<{ $position?: string }>`
+  display: block;
   width: 100%;
   height: 100%;
-  min-height: 300px;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 18px;
-  background: #111111;
-  padding: 24px;
-  transform: translateZ(40px);
+  min-height: 380px;
+  object-fit: cover;
+  object-position: ${(props) => props.$position ?? 'center top'};
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateZ(40px) scale(1.015);
+  transition:
+    transform 520ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 520ms ease;
+  will-change: transform;
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: -52px;
-    right: -52px;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: ${palette.accent};
-    filter: blur(58px);
-    opacity: 0.1;
+  ${CaseCard3d}:hover & {
+    transform: translateZ(56px) scale(1.045);
+    filter: saturate(1.04) contrast(1.02);
+  }
+
+  @media (max-width: 899px) {
+    min-height: 420px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+    transition: none;
   }
 `;
 
-const LayerLine = styled.span<{ $width: string; $accent?: boolean }>`
-  display: block;
-  width: ${(props) => props.$width};
-  height: ${(props) => (props.$accent ? '100%' : '12px')};
-  border-radius: ${(props) => (props.$accent ? '6px 6px 2px 2px' : '999px')};
-  background: ${(props) =>
-    props.$accent ? 'rgba(0, 229, 40, 0.6)' : 'rgba(255, 255, 255, 0.1)'};
-`;
-
-const ChartPanel = styled.div`
-  display: flex;
-  height: 132px;
-  align-items: end;
-  gap: 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 16px;
-  margin-top: 24px;
-
-  span {
-    width: 34px;
-    border-radius: 6px 6px 2px 2px;
-    background: rgba(0, 229, 40, 0.5);
-  }
-
-  span:nth-child(1) {
-    height: 36%;
-  }
-
-  span:nth-child(2) {
-    height: 68%;
-    background: rgba(0, 229, 40, 0.78);
-  }
-
-  span:nth-child(3) {
-    height: 100%;
-    background: ${palette.accent};
-    box-shadow: 0 0 18px rgba(0, 229, 40, 0.32);
-  }
-`;
-
-const BottomGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: auto;
-
-  span {
-    height: 42px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-  }
-`;
-
-const DeployedBadge = styled.div`
+const ImageScrim = styled.div`
   position: absolute;
-  right: 46px;
-  bottom: 46px;
+  inset: auto 0 0;
+  height: 32%;
+  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.82));
+  pointer-events: none;
+`;
+
+const DeployedBadge = styled.div<{ $accent: string }>`
+  position: absolute;
+  right: 34px;
+  bottom: 34px;
   display: inline-flex;
   align-items: center;
   gap: 9px;
   border-radius: 16px;
-  background: ${palette.accent};
+  background: ${(props) => props.$accent};
   color: ${palette.ink};
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
   padding: 13px 16px;
   font-weight: 900;
-  transform: translateZ(80px);
+  transform: translateZ(90px);
 
   svg {
     font-size: 20px;
   }
 
   @media (max-width: 599px) {
-    right: 24px;
-    bottom: 24px;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 14px;
+    padding: 11px 13px;
+    font-size: 0.86rem;
   }
 `;
 
-function CaseVisual({ caseItem, index }: { caseItem: CaseItem; index: number }) {
+function AnimatedWords({ active, text }: AnimatedWordsProps) {
+  const words = text.split(' ');
+
   return (
-    <PerspectiveBox aria-label={`Preview visual do case ${caseItem.title}`}>
+    <AnimatedTitle $active={active} variant="h2" aria-label={text}>
+      {words.map((word, index) => (
+        <Fragment key={`${word}-${index}`}>
+          <Word
+            $active={active}
+            aria-hidden="true"
+            style={{ '--word-index': index } as CSSProperties}
+          >
+            {word}
+          </Word>
+          {index < words.length - 1 ? ' ' : null}
+        </Fragment>
+      ))}
+    </AnimatedTitle>
+  );
+}
+
+function CaseVisual({ project, index }: { project: Project; index: number }) {
+  return (
+    <PerspectiveBox aria-label={`Print do hero do projeto ${project.title}`}>
       <CaseCard3d className={index % 2 === 0 ? 'case-card-even' : 'case-card-odd'}>
         <Browser>
           <BrowserTop>
+            <Dot $accent={project.accent} />
             <Dot />
             <Dot />
-            <Dot />
-            <Url>hcwebsolutions.com.br/{caseItem.id}</Url>
+            <Url>{project.previewLabel}</Url>
           </BrowserTop>
 
           <BrowserBody>
-            <InnerLayer>
-              <LayerLine $width="34%" />
-              <ChartPanel>
-                <span />
-                <span />
-                <span />
-              </ChartPanel>
-              <BottomGrid>
-                <span />
-                <span />
-              </BottomGrid>
-            </InnerLayer>
-            <DeployedBadge>
-              <CodeRoundedIcon />
-              Deployed
+            <PreviewImage
+              src={project.image}
+              alt={project.imageAlt}
+              $position={project.imagePosition}
+              loading={index === 0 ? 'eager' : 'lazy'}
+            />
+            <ImageScrim aria-hidden="true" />
+            <DeployedBadge $accent={project.accent}>
+              <CheckCircleRoundedIcon />
+              Preview público
             </DeployedBadge>
           </BrowserBody>
         </Browser>
@@ -451,24 +483,37 @@ function CaseVisual({ caseItem, index }: { caseItem: CaseItem; index: number }) 
   );
 }
 
-function CaseContent({ caseItem, index }: { caseItem: CaseItem; index: number }) {
+function CaseContent({
+  active,
+  index,
+  project,
+}: {
+  active: boolean;
+  index: number;
+  project: Project;
+}) {
   return (
     <CaseGrid $reverse={index % 2 !== 0}>
       <CaseCopy>
         <Meta>
-          0{caseItem.id} / {caseItem.category}
+          0{project.id} / {project.category}
         </Meta>
-        <Title id={index === 0 ? 'cases-title' : undefined} variant="h2">
-          {caseItem.title}
-        </Title>
-        <Description>{caseItem.desc}</Description>
-        <CaseLink to="/contato">
-          Ver detalhes do projeto
+        <AnimatedWords active={active} text={project.title} />
+        <Description>{project.desc}</Description>
+
+        <TagRow>
+          {project.tags.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </TagRow>
+
+        <CaseLink href={project.previewUrl} target="_blank" rel="noreferrer" $accent={project.accent}>
+          Abrir prévia pública
           <ArrowOutwardRoundedIcon />
         </CaseLink>
       </CaseCopy>
 
-      <CaseVisual caseItem={caseItem} index={index} />
+      <CaseVisual project={project} index={index} />
     </CaseGrid>
   );
 }
@@ -491,7 +536,7 @@ export function PortfolioSection() {
       const rect = section.getBoundingClientRect();
       const totalScrollable = section.offsetHeight - window.innerHeight;
       const progress = totalScrollable > 0 ? clamp(-rect.top / totalScrollable) : 0;
-      const nextIndex = Math.min(MOCK_CASES.length - 1, Math.floor(progress * MOCK_CASES.length));
+      const nextIndex = Math.min(projects.length - 1, Math.floor(progress * projects.length));
 
       setActiveCase((current) => (current === nextIndex ? current : nextIndex));
     };
@@ -513,24 +558,29 @@ export function PortfolioSection() {
   }, []);
 
   return (
-    <Section id="cases" ref={sectionRef} aria-labelledby="cases-title">
+    <Section id="cases" ref={sectionRef} aria-label="Portfólio de projetos publicados">
       <LegacyAnchor id="projetos" aria-hidden="true" />
 
       <StickyStage>
-        {MOCK_CASES.map((caseItem, index) => (
-          <CaseSlide key={caseItem.id} $active={activeCase === index} $glow={caseItem.glow}>
+        {projects.map((project, index) => (
+          <CaseSlide
+            key={project.id}
+            $active={activeCase === index}
+            $glow={project.glow}
+            aria-hidden={activeCase !== index}
+          >
             <Container maxWidth="xl">
-              <CaseContent caseItem={caseItem} index={index} />
+              <CaseContent active={activeCase === index} project={project} index={index} />
             </Container>
           </CaseSlide>
         ))}
       </StickyStage>
 
       <MobileCases>
-        {MOCK_CASES.map((caseItem, index) => (
-          <MobileCasePanel key={caseItem.id} $glow={caseItem.glow}>
+        {projects.map((project, index) => (
+          <MobileCasePanel key={project.id} $glow={project.glow}>
             <Container maxWidth="xl">
-              <CaseContent caseItem={caseItem} index={index} />
+              <CaseContent active project={project} index={index} />
             </Container>
           </MobileCasePanel>
         ))}

@@ -1,48 +1,48 @@
 import type { Project } from '../types';
 
+const PREVIEW_BASE_URL = 'https://preview.hcwebsolutions.com.br/projetos';
+
 export const projects: Project[] = [
   {
-    title: 'Clínica local com agenda mais cheia',
-    segment: 'Clínica e saúde',
-    problem:
-      'O negócio dependia de indicações e redes sociais, mas não tinha uma página clara para explicar serviços e converter visitantes em contatos.',
-    solution:
-      'Landing page com proposta direta, botões de WhatsApp, prova de confiança, perguntas frequentes e estrutura pronta para campanhas.',
-    result: '+38% pedidos de contato',
-    tags: ['Landing Page', 'WhatsApp', 'Campanhas', 'Conversão'],
-    accent: 'Captação',
+    id: 1,
+    title: 'Akatu Desenvolvimento Infantil',
+    category: 'Landing page',
+    desc: 'Página viva e acolhedora para uma clínica infantil, com hero lúdico, navegação clara e chamada direta para agendar conversa.',
+    previewUrl: `${PREVIEW_BASE_URL}/akatu/`,
+    previewLabel: 'preview.hcwebsolutions.com.br/projetos/akatu',
+    image: '/portfolio/akatu-hero.png',
+    imageAlt: 'Print do hero da landing page Akatu Desenvolvimento Infantil',
+    glow: 'rgba(16, 184, 197, 0.26)',
+    accent: '#10b8c5',
+    tags: ['Saúde infantil', 'WhatsApp', 'Clínica', 'Hero ilustrado'],
+    imagePosition: 'center top',
   },
   {
-    title: 'Prestador de serviço com presença profissional',
-    segment: 'Serviços especializados',
-    problem:
-      'O atendimento era bom, mas a apresentação digital não transmitia o mesmo nível de confiança antes da conversa comercial.',
-    solution:
-      'Site institucional enxuto com serviços, diferenciais, depoimentos simulados, chamada para orçamento e visual responsivo.',
-    result: 'Mais confiança no primeiro contato',
-    tags: ['Institucional', 'Autoridade', 'SEO', 'Contato'],
-    accent: 'Autoridade',
+    id: 2,
+    title: 'Analítica Labor',
+    category: 'Site B2B',
+    desc: 'Redesign comercial para suprimentos laboratoriais, combinando prova técnica, catálogo consultivo e cotação sem atrito.',
+    previewUrl: `${PREVIEW_BASE_URL}/analitica/`,
+    previewLabel: 'preview.hcwebsolutions.com.br/projetos/analitica',
+    image: '/portfolio/analitica-hero.png',
+    imageAlt: 'Print do hero do site Analítica Labor',
+    glow: 'rgba(0, 92, 153, 0.25)',
+    accent: '#1db6c8',
+    tags: ['Laboratório', 'Catálogo', 'ISO 9001', 'Cotação'],
+    imagePosition: 'center top',
   },
   {
-    title: 'Negócio local recebendo pedidos com menos atrito',
-    segment: 'Comércio e atendimento',
-    problem:
-      'Clientes chegavam pelo Instagram, mas as informações ficavam espalhadas e o pedido de orçamento demorava para acontecer.',
-    solution:
-      'Página de captação com catálogo resumido, benefícios, CTA fixo no mobile e mensagem de WhatsApp mais organizada.',
-    result: 'Briefings mais completos',
-    tags: ['Captação', 'Mobile', 'Pedidos', 'WhatsApp'],
-    accent: 'Pedidos',
-  },
-  {
-    title: 'Operação interna saindo da planilha',
-    segment: 'Processos internos',
-    problem:
-      'A equipe controlava clientes e status manualmente, gerando retrabalho, perda de histórico e dificuldade para acompanhar demandas.',
-    solution:
-      'Sistema web com login, cadastro, painel administrativo, filtros por status e base preparada para evoluções futuras.',
-    result: 'Processo mais organizado',
-    tags: ['Sistema Web', 'Dashboard', 'Login', 'Processos'],
-    accent: 'Operação',
+    id: 3,
+    title: 'ClickToFly',
+    category: 'Captação',
+    desc: 'Landing imersiva para ofertas de viagem, com hero visual forte, CTAs para WhatsApp e fluxo de orçamento personalizado.',
+    previewUrl: `${PREVIEW_BASE_URL}/clicktofly/`,
+    previewLabel: 'preview.hcwebsolutions.com.br/projetos/clicktofly',
+    image: '/portfolio/clicktofly-hero.png',
+    imageAlt: 'Print do hero da landing page ClickToFly',
+    glow: 'rgba(0, 191, 203, 0.28)',
+    accent: '#00c7c8',
+    tags: ['Turismo', 'WhatsApp', 'Orçamento', 'Hero fotográfico'],
+    imagePosition: 'center top',
   },
 ];

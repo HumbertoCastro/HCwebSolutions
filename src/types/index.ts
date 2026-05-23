@@ -4,13 +4,18 @@ export type NavItem = {
 };
 
 export type Project = {
+  id: number;
   title: string;
-  segment: string;
-  problem: string;
-  solution: string;
-  result: string;
-  tags: string[];
+  category: string;
+  desc: string;
+  previewUrl: string;
+  previewLabel: string;
+  image: string;
+  imageAlt: string;
+  glow: string;
   accent: string;
+  tags: string[];
+  imagePosition?: string;
 };
 
 export type PricingPlan = {
