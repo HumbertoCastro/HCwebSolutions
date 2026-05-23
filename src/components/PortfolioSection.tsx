@@ -34,11 +34,6 @@ const Section = styled.section`
   min-height: ${(CASE_COUNT + 1) * 620}px;
   background: ${palette.background};
   scroll-margin-top: 90px;
-
-  @media (max-width: 899px) {
-    height: auto;
-    min-height: 0;
-  }
 `;
 
 const LegacyAnchor = styled.span`
@@ -56,10 +51,6 @@ const StickyStage = styled.div`
   min-height: 620px;
   overflow: clip;
   background: ${palette.background};
-
-  @media (max-width: 899px) {
-    display: none;
-  }
 `;
 
 const CaseSlide = styled.article<{ $active: boolean; $glow: string }>`
@@ -79,23 +70,6 @@ const CaseSlide = styled.article<{ $active: boolean; $glow: string }>`
   transition:
     opacity 420ms ease,
     transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
-`;
-
-const MobileCases = styled.div`
-  display: none;
-
-  @media (max-width: 899px) {
-    display: grid;
-  }
-`;
-
-const MobileCasePanel = styled.article<{ $glow: string }>`
-  padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background:
-    radial-gradient(circle at 82% 18%, ${(props) => props.$glow}, transparent 35%),
-    linear-gradient(180deg, ${(props) => props.$glow}, transparent 32%),
-    ${palette.background};
 `;
 
 const CaseGrid = styled.div<{ $reverse: boolean }>`
@@ -576,15 +550,6 @@ export function PortfolioSection() {
         ))}
       </StickyStage>
 
-      <MobileCases>
-        {projects.map((project, index) => (
-          <MobileCasePanel key={project.id} $glow={project.glow}>
-            <Container maxWidth="xl">
-              <CaseContent active project={project} index={index} />
-            </Container>
-          </MobileCasePanel>
-        ))}
-      </MobileCases>
     </Section>
   );
 }

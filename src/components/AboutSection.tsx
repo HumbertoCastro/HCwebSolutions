@@ -38,7 +38,7 @@ const Title = styled(Typography)`
     line-height: 0.96;
     color: ${palette.ink};
 
-    span {
+    > span {
       color: #aeb6c3;
     }
   }
@@ -332,7 +332,9 @@ export function AboutSection() {
               <Title id="about-title" variant="h2" mb={3}>
                 <AnimatedTitleText text="Quem está por trás" />
                 {" "}
-                <AnimatedTitleText text="da HC Web Solutions" accent delay={0.28} />
+                <AnimatedTitleText text="da" delay={0.28} />
+                {" "}
+                <AnimatedTitleText text="HC Web Solutions" accent delay={0.34} />
               </Title>
               <Copy mb={2.2}>
                 A HC Web Solutions é liderada por Humberto Castro, desenvolvedor

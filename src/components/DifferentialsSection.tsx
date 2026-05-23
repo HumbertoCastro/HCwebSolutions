@@ -119,9 +119,7 @@ const StickyColumn = styled.div`
   padding: clamp(72px, 9vw, 112px) 0 clamp(42px, 6vw, 76px);
 
   @media (max-width: 899px) {
-    top: 72px;
-    height: auto;
-    padding: 18px 0 8px;
+    display: none;
   }
 `;
 
@@ -479,6 +477,23 @@ const FeatureList = styled.div`
   position: relative;
   z-index: 1;
   padding: 0 0 1px;
+
+  @media (max-width: 899px) {
+    display: grid;
+    gap: 28px;
+    padding: 0 0 clamp(72px, 12vw, 104px);
+  }
+`;
+
+const MobileFeatureVisual = styled.div`
+  display: none;
+
+  @media (max-width: 899px) {
+    display: grid;
+    width: 100%;
+    place-items: center;
+    margin: 0 auto clamp(28px, 7vw, 42px);
+  }
 `;
 
 const FeatureBlock = styled.article<{ $active: boolean }>`
@@ -494,8 +509,9 @@ const FeatureBlock = styled.article<{ $active: boolean }>`
     transform 520ms ease;
 
   @media (max-width: 899px) {
-    min-height: 64vh;
-    padding: 44px 0;
+    min-height: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: clamp(34px, 9vw, 52px) 0 0;
     opacity: 1;
     transform: none;
   }
@@ -671,6 +687,9 @@ export function DifferentialsSection() {
                 data-feature-index={index}
                 $active={activeFeature === index}
               >
+                <MobileFeatureVisual>
+                  <FeatureVisual activeFeature={index} />
+                </MobileFeatureVisual>
                 <FeatureTitle variant="h3">{feature.title}</FeatureTitle>
                 <FeatureText>{feature.desc}</FeatureText>
               </FeatureBlock>
