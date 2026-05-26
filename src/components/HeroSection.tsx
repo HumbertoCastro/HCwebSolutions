@@ -9,6 +9,7 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import styled, { css, keyframes } from 'styled-components';
 import { motionTokens } from '../motion';
 import { palette } from '../theme';
+import { Waves } from './ui/wave-background';
 
 const floatOne = keyframes`
   0%, 100% {
@@ -46,6 +47,8 @@ const Hero = styled.section`
   display: grid;
   align-items: center;
   overflow: hidden;
+  isolation: isolate;
+  background: ${palette.background};
   padding: clamp(128px, 14vw, 176px) 0 clamp(72px, 8vw, 116px);
   scroll-margin-top: 100px;
 
@@ -53,6 +56,50 @@ const Hero = styled.section`
     min-height: auto;
     padding: 118px 0 72px;
   }
+`;
+
+const HeroWaveLayer = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  .waves-component {
+    opacity: 0.98;
+    filter: brightness(1.65) contrast(1.18) saturate(1.35);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 70% 36%, rgba(0, 229, 40, 0.18), transparent 34%),
+      radial-gradient(circle at 46% 74%, rgba(0, 229, 40, 0.1), transparent 34%),
+      linear-gradient(90deg, transparent 0%, rgba(0, 229, 40, 0.07) 54%, transparent 100%);
+    mix-blend-mode: screen;
+  }
+`;
+
+const HeroReadabilityLayer = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.76) 34%, rgba(5, 5, 5, 0.24) 62%, rgba(5, 5, 5, 0.46) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0.03) 48%, rgba(5, 5, 5, 0.58) 100%);
+
+  @media (max-width: 1023px) {
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0.86) 0%, rgba(5, 5, 5, 0.52) 48%, rgba(5, 5, 5, 0.82) 100%),
+      linear-gradient(90deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.36) 100%);
+  }
+`;
+
+const HeroContainer = styled(Container)`
+  position: relative;
+  z-index: 2;
 `;
 
 const HeroGrid = styled.div`
@@ -90,20 +137,22 @@ const Badge = styled.span`
   width: fit-content;
   min-height: 36px;
   max-width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 229, 40, 0.28);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: ${palette.accent};
+  background: rgba(2, 17, 8, 0.76);
+  color: #8eff9f;
   padding: 8px 13px;
   font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 0.12em;
   line-height: 1.25;
   text-transform: uppercase;
+  box-shadow: 0 0 0 1px rgba(0, 229, 40, 0.08), 0 18px 44px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
 
   svg {
     font-size: 17px;
-    color: ${palette.accent};
+    color: #8eff9f;
   }
 `;
 
@@ -118,10 +167,12 @@ const HeroTitle = styled(Typography)`
     line-height: 1.05;
     overflow-wrap: break-word;
     text-wrap: balance;
+    text-shadow: 0 18px 54px rgba(0, 0, 0, 0.82);
 
     strong {
       color: ${palette.accent};
       font: inherit;
+      text-shadow: 0 0 34px rgba(0, 229, 40, 0.24);
     }
 
     .mobile-copy {
@@ -148,12 +199,13 @@ const HeroText = styled(Typography)`
   && {
     max-width: 510px;
     margin-top: 26px;
-    color: ${palette.textMuted};
+    color: rgba(255, 255, 255, 0.78);
     font-size: clamp(1.04rem, 1.45vw, 1.22rem);
     font-weight: 500;
     line-height: 1.38;
     overflow-wrap: break-word;
     text-wrap: pretty;
+    text-shadow: 0 12px 32px rgba(0, 0, 0, 0.72);
   }
 `;
 
@@ -471,7 +523,15 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
 
   return (
     <Hero id="inicio" aria-labelledby="hero-title">
-      <Container maxWidth="xl">
+      <HeroWaveLayer aria-hidden="true">
+        <Waves
+          strokeColor="rgba(0, 229, 40, 0.46)"
+          backgroundColor="#031a0a"
+          pointerSize={0.5}
+        />
+      </HeroWaveLayer>
+      <HeroReadabilityLayer aria-hidden="true" />
+      <HeroContainer maxWidth="xl">
         <HeroGrid>
           <HeroCopy variants={copyVariants} initial="hidden" animate="visible">
             <AnimatedBlock variants={itemVariants}>
@@ -600,7 +660,7 @@ export function HeroSection({ onContactClick }: HeroSectionProps) {
             </Phone>
           </VisualStage>
         </HeroGrid>
-      </Container>
+      </HeroContainer>
     </Hero>
   );
 }
