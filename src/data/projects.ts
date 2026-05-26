@@ -45,4 +45,18 @@ export const projects: Project[] = [
     tags: ['Turismo', 'WhatsApp', 'Orçamento', 'Hero fotográfico'],
     imagePosition: 'center top',
   },
+  {
+    id: 4,
+    title: 'Sua Saúde',
+    category: 'Landing médica',
+    desc: 'Landing institucional para clínica médica adulta, com visual clínico claro, CTA de agendamento e jornada de cuidado sem ruído.',
+    previewUrl: `${PREVIEW_BASE_URL}/sua-saude/`,
+    previewLabel: 'preview.hcwebsolutions.com.br/projetos/sua-saude',
+    image: '/portfolio/sua-saude-hero.png',
+    imageAlt: 'Print do hero da landing page Sua Saúde',
+    glow: 'rgba(22, 139, 160, 0.27)',
+    accent: '#168ba0',
+    tags: ['Clínica médica', 'Agendamento', 'WhatsApp', 'Cuidado preventivo'],
+    imagePosition: 'center top',
+  },
 ];

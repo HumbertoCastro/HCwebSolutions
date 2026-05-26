@@ -51,6 +51,11 @@ const StickyStage = styled.div`
   min-height: 620px;
   overflow: clip;
   background: ${palette.background};
+
+  @media (max-width: 899px) {
+    height: 100svh;
+    min-height: 0;
+  }
 `;
 
 const CaseSlide = styled.article<{ $active: boolean; $glow: string }>`
@@ -70,6 +75,15 @@ const CaseSlide = styled.article<{ $active: boolean; $glow: string }>`
   transition:
     opacity 420ms ease,
     transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media (max-width: 899px) {
+    align-items: flex-start;
+    padding: 88px 0 24px;
+  }
+
+  @media (max-width: 599px) {
+    padding-top: 82px;
+  }
 `;
 
 const CaseGrid = styled.div<{ $reverse: boolean }>`
@@ -94,6 +108,7 @@ const CaseGrid = styled.div<{ $reverse: boolean }>`
 
   @media (max-width: 899px) {
     grid-template-columns: 1fr;
+    gap: clamp(18px, 3svh, 28px);
 
     > :first-child,
     > :last-child {
@@ -145,7 +160,8 @@ const AnimatedTitle = styled(Typography)<{ $active: boolean }>`
       `}
 
     @media (max-width: 599px) {
-      font-size: clamp(2.15rem, 10vw, 2.7rem);
+      margin-top: 16px;
+      font-size: clamp(1.95rem, 9.2vw, 2.45rem);
       letter-spacing: -0.04em;
       line-height: 1;
     }
@@ -191,6 +207,12 @@ const Description = styled(Typography)`
     font-size: clamp(1.04rem, 1.55vw, 1.25rem);
     line-height: 1.58;
     text-wrap: pretty;
+
+    @media (max-width: 599px) {
+      margin-top: 14px;
+      font-size: 0.98rem;
+      line-height: 1.48;
+    }
   }
 `;
 
@@ -199,6 +221,10 @@ const TagRow = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 24px;
+
+  @media (max-width: 599px) {
+    margin-top: 16px;
+  }
 `;
 
 const Tag = styled.span`
@@ -212,6 +238,11 @@ const Tag = styled.span`
   padding: 7px 11px;
   font-size: 0.78rem;
   font-weight: 760;
+
+  @media (max-width: 599px) {
+    min-height: 30px;
+    padding: 6px 10px;
+  }
 `;
 
 const CaseLink = styled.a<{ $accent: string }>`
@@ -246,6 +277,11 @@ const CaseLink = styled.a<{ $accent: string }>`
   &:active {
     transform: scale(0.96);
   }
+
+  @media (max-width: 599px) {
+    min-height: 42px;
+    margin-top: 18px;
+  }
 `;
 
 const PerspectiveBox = styled.div`
@@ -262,8 +298,13 @@ const PerspectiveBox = styled.div`
   }
 
   @media (max-width: 899px) {
-    height: auto;
-    min-height: 420px;
+    height: min(40svh, 360px);
+    min-height: 300px;
+  }
+
+  @media (max-width: 599px) {
+    height: clamp(250px, 36svh, 310px);
+    min-height: 0;
   }
 `;
 
@@ -277,7 +318,7 @@ const CaseCard3d = styled.div`
   will-change: transform;
 
   @media (max-width: 899px) {
-    min-height: 420px;
+    min-height: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -296,6 +337,10 @@ const Browser = styled.div`
   border-radius: 30px;
   background: #0a0a0a;
   box-shadow: 0 34px 110px rgba(0, 0, 0, 0.46);
+
+  @media (max-width: 599px) {
+    border-radius: 22px;
+  }
 `;
 
 const BrowserTop = styled.div`
@@ -306,6 +351,11 @@ const BrowserTop = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: #111111;
   padding: 0 16px;
+
+  @media (max-width: 599px) {
+    height: 42px;
+    padding: 0 12px;
+  }
 `;
 
 const Dot = styled.span<{ $accent?: string }>`
@@ -360,7 +410,7 @@ const PreviewImage = styled.img<{ $position?: string }>`
   }
 
   @media (max-width: 899px) {
-    min-height: 420px;
+    min-height: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -400,8 +450,8 @@ const DeployedBadge = styled.div<{ $accent: string }>`
     right: 20px;
     bottom: 20px;
     border-radius: 14px;
-    padding: 11px 13px;
-    font-size: 0.86rem;
+    padding: 10px 12px;
+    font-size: 0.82rem;
   }
 `;
 
