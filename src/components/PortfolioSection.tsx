@@ -34,6 +34,15 @@ const Section = styled.section`
   min-height: ${(CASE_COUNT + 1) * 620}px;
   background: ${palette.background};
   scroll-margin-top: 90px;
+
+  @media (max-width: 899px) {
+    height: ${(CASE_COUNT + 1) * 100}svh;
+    min-height: ${(CASE_COUNT + 1) * 620}px;
+  }
+
+  @media (max-width: 599px) {
+    min-height: ${(CASE_COUNT + 1) * 660}px;
+  }
 `;
 
 const LegacyAnchor = styled.span`
@@ -78,11 +87,12 @@ const CaseSlide = styled.article<{ $active: boolean; $glow: string }>`
 
   @media (max-width: 899px) {
     align-items: flex-start;
-    padding: 88px 0 24px;
+    min-height: 0;
+    padding: clamp(78px, 9svh, 92px) 0 clamp(36px, 6svh, 58px);
   }
 
   @media (max-width: 599px) {
-    padding-top: 82px;
+    padding: clamp(76px, 9.5svh, 88px) 0 clamp(26px, 5svh, 42px);
   }
 `;
 
@@ -108,12 +118,20 @@ const CaseGrid = styled.div<{ $reverse: boolean }>`
 
   @media (max-width: 899px) {
     grid-template-columns: 1fr;
-    gap: clamp(18px, 3svh, 28px);
+    gap: clamp(22px, 4svh, 34px);
+    align-items: start;
 
-    > :first-child,
-    > :last-child {
-      order: initial;
+    > :first-child {
+      order: 2;
     }
+
+    > :last-child {
+      order: 1;
+    }
+  }
+
+  @media (max-width: 599px) {
+    gap: clamp(14px, 2.6svh, 22px);
   }
 `;
 
@@ -122,6 +140,10 @@ const CaseCopy = styled.div`
   min-width: 0;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 899px) {
+    max-width: 680px;
+  }
 `;
 
 const Meta = styled.span`
@@ -145,7 +167,7 @@ const AnimatedTitle = styled(Typography)<{ $active: boolean }>`
     max-width: 680px;
     margin-top: 24px;
     color: ${palette.text};
-    font-size: clamp(2.55rem, 5.2vw, 5.9rem);
+    font-size: clamp(2.55rem, 4.95vw, 5.15rem);
     font-weight: 900;
     letter-spacing: -0.055em;
     line-height: 0.98;
@@ -164,6 +186,12 @@ const AnimatedTitle = styled(Typography)<{ $active: boolean }>`
       font-size: clamp(1.95rem, 9.2vw, 2.45rem);
       letter-spacing: -0.04em;
       line-height: 1;
+    }
+
+    @media (max-width: 599px) and (max-height: 760px) {
+      margin-top: 12px;
+      font-size: clamp(1.72rem, 8.3vw, 2.08rem);
+      line-height: 0.98;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -213,6 +241,12 @@ const Description = styled(Typography)`
       font-size: 0.98rem;
       line-height: 1.48;
     }
+
+    @media (max-width: 599px) and (max-height: 760px) {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      line-height: 1.36;
+    }
   }
 `;
 
@@ -224,6 +258,11 @@ const TagRow = styled.div`
 
   @media (max-width: 599px) {
     margin-top: 16px;
+  }
+
+  @media (max-width: 599px) and (max-height: 760px) {
+    gap: 6px;
+    margin-top: 12px;
   }
 `;
 
@@ -242,6 +281,12 @@ const Tag = styled.span`
   @media (max-width: 599px) {
     min-height: 30px;
     padding: 6px 10px;
+  }
+
+  @media (max-width: 599px) and (max-height: 760px) {
+    min-height: 28px;
+    padding: 5px 9px;
+    font-size: 0.72rem;
   }
 `;
 
@@ -282,6 +327,11 @@ const CaseLink = styled.a<{ $accent: string }>`
     min-height: 42px;
     margin-top: 18px;
   }
+
+  @media (max-width: 599px) and (max-height: 760px) {
+    min-height: 36px;
+    margin-top: 12px;
+  }
 `;
 
 const PerspectiveBox = styled.div`
@@ -298,13 +348,16 @@ const PerspectiveBox = styled.div`
   }
 
   @media (max-width: 899px) {
-    height: min(40svh, 360px);
-    min-height: 300px;
+    height: clamp(300px, 56vw, 430px);
+    min-height: 0;
   }
 
   @media (max-width: 599px) {
-    height: clamp(250px, 36svh, 310px);
-    min-height: 0;
+    height: clamp(268px, 72vw, 330px);
+  }
+
+  @media (max-width: 599px) and (max-height: 760px) {
+    height: clamp(196px, 31svh, 232px);
   }
 `;
 
@@ -586,18 +639,22 @@ export function PortfolioSection() {
       <LegacyAnchor id="projetos" aria-hidden="true" />
 
       <StickyStage>
-        {projects.map((project, index) => (
-          <CaseSlide
-            key={project.id}
-            $active={activeCase === index}
-            $glow={project.glow}
-            aria-hidden={activeCase !== index}
-          >
-            <Container maxWidth="xl">
-              <CaseContent active={activeCase === index} project={project} index={index} />
-            </Container>
-          </CaseSlide>
-        ))}
+        {projects.map((project, index) => {
+          const isActive = activeCase === index;
+
+          return (
+            <CaseSlide
+              key={project.id}
+              $active={isActive}
+              $glow={project.glow}
+              aria-hidden={!isActive}
+            >
+              <Container maxWidth="xl">
+                <CaseContent active={isActive} project={project} index={index} />
+              </Container>
+            </CaseSlide>
+          );
+        })}
       </StickyStage>
 
     </Section>
